@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class EditCityDialog extends JDialog {
     private static final int MIN_CITY_SIZE = 10;
-    private static final int MAX_CITY_SIZE = 10;
+    private static final int MAX_CITY_SIZE = 50;
 
     private boolean isUpdated = false;
 
@@ -31,7 +31,8 @@ public class EditCityDialog extends JDialog {
         add(labelTextField, constraints);
 
         sizeTextField = new JTextField(Integer.toString(city.getDimension().height));
-        sizeTextField.setBorder(BorderFactory.createTitledBorder("Size (Between 10 to 50)"));
+        sizeTextField.setBorder(BorderFactory.createTitledBorder(String.format("Size (Between %d to %d)", MIN_CITY_SIZE,
+                MAX_CITY_SIZE)));
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.insets = new Insets(5, 5, 0, 5);
