@@ -20,7 +20,7 @@ import java.util.Observer;
 public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotionListener, Observer {
     private final WorkSpace workSpace;
 
-    City clickedCity = null;
+    City movingCity = null;
     int preX, preY;
 
     /**
@@ -76,7 +76,21 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      * @param e the event to be processed
      */
     @Override
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+            City clickedCity = workSpace.getCityList().stream()
+                    .filter(x -> x.contains(e.getX(), e.getY()))
+                    .findFirst().orElse(null);
+
+            if (clickedCity != null) {
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                EditCityDialog editCityDialog = new EditCityDialog(parentFrame, clickedCity);
+                editCityDialog.setVisible(true);
+                if (editCityDialog.getUpdated())
+                    repaint();
+            }
+        }
+    }
 
     /**
      * Invoked when a mouse button has been pressed on a component.
@@ -88,20 +102,20 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        clickedCity = workSpace.getCityList().stream()
+        movingCity = workSpace.getCityList().stream()
                 .filter(x -> x.contains(e.getX(), e.getY()))
                 .findFirst().orElse(null);
 
-        if (clickedCity != null) {
-            preX = clickedCity.getX() - e.getX();
-            preY = clickedCity.getY() - e.getY();
-            workSpace.moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
+        if (movingCity != null) {
+            preX = movingCity.getX() - e.getX();
+            preY = movingCity.getY() - e.getY();
+            workSpace.moveExistingCity(movingCity, preX + e.getX(), preY + e.getY());
         }
         else {
             String cityName = JOptionPane.showInputDialog(this, "Enter City Name");
             if (cityName != null && !cityName.isEmpty()) {
                 City city = new City(cityName, e.getX(), e.getY(), WorkSpace.DEFAULT_CITY_WIDTH,
-                        WorkSpace.DEFAULT_CITY_HEIGHT);
+                        WorkSpace.DEFAULT_CITY_HEIGHT, WorkSpace.DEFAULT_CITY_COLOR);
                 workSpace.addNewCity(city);
             }
         }
@@ -122,8 +136,8 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (clickedCity != null)
-            workSpace.moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
+        if (movingCity != null)
+            workSpace.moveExistingCity(movingCity, preX + e.getX(), preY + e.getY());
     }
 
     /**
@@ -143,9 +157,9 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (clickedCity != null && clickedCity.contains(e.getX(), e.getY())) {
-            workSpace.moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
-            clickedCity = null;
+        if (movingCity != null && movingCity.contains(e.getX(), e.getY())) {
+            workSpace.moveExistingCity(movingCity, preX + e.getX(), preY + e.getY());
+            movingCity = null;
         }
     }
 

@@ -12,7 +12,8 @@ import java.awt.geom.Line2D;
  */
 public class City {
     private final Rectangle bounds;
-    private final String label;
+    private String label;
+    private Color color;
 
     /**
      * The constructor to create a new city.
@@ -23,9 +24,10 @@ public class City {
      * @param w width of the city rectangle to be drawn
      * @param h height of the city rectangle to be drawn
      */
-    public City(String label, int x, int y, int w, int h) {
+    public City(String label, int x, int y, int w, int h, Color color) {
         this.bounds = new Rectangle(x, y, w, h);
         this.label = label;
+        this.color = color;
     }
     /**
      * Get the x-coordinate of the upper left corner of the city rectangle
@@ -46,17 +48,55 @@ public class City {
     public String getLabel() { return label; }
 
     /**
+     * Set the city name.
+     * @param label city name.
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    /**
+     * Get the city color.
+     * @return city color.
+     */
+    public Color getColor() { return color; }
+
+    /**
+     * Set the city color.
+     * @param color city color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /**
+     * Get the city dimension.
+     * @return city dimension.
+     */
+    public Dimension getDimension() {
+        return bounds.getSize();
+    }
+
+    /**
+     * Set the city dimension.
+     * @param dimension city dimension.
+     */
+    public void setDimension(Dimension dimension) {
+        bounds.setSize(dimension);
+    }
+
+    /**
      * Plots the city (as a rectangle) using a Graphics object.
      * @param g graphics object to plot the content
      */
     public void draw(Graphics2D g) {
         int x = bounds.x, y = bounds.y, h = bounds.height, w = bounds.width;
-        g.setColor(Color.red);
+        g.setColor(color);
         g.drawRect(x, y, w, h);
         Color c = g.getColor();
-        g.setColor(Color.white);
+        g.setColor(color);
         g.fillRect(x + 1, y + 1, w - 1, h - 1);
-        g.setColor(Color.red);
+        g.setColor(Color.black);
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g.drawString(label, x + w, y);
         g.setColor(c);
@@ -82,7 +122,7 @@ public class City {
      * @param g graphics object to plot the content
      */
     public void drawConnect(City b, Graphics2D g) {
-        g.setColor(Color.blue);
+        g.setColor(Color.black);
         g.setStroke(new BasicStroke(2));
         g.draw(new Line2D.Float(center().x, center().y, b.center().x, b.center().y));
     }

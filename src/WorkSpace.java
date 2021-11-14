@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Observable;
 public class WorkSpace extends Observable {
     public static final int DEFAULT_CITY_HEIGHT = 20;
     public static final int DEFAULT_CITY_WIDTH = 20;
+    public static final Color DEFAULT_CITY_COLOR = Color.RED;
 
     private final List<City> cityList = new ArrayList<>();
     private ArrayList<Route> routeList;
@@ -63,7 +65,7 @@ public class WorkSpace extends Observable {
         for (String line : lineList) {
             String[] tokens = line.split(" ");
             City city = new City(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
-                    DEFAULT_CITY_WIDTH, DEFAULT_CITY_HEIGHT);
+                    DEFAULT_CITY_WIDTH, DEFAULT_CITY_HEIGHT, DEFAULT_CITY_COLOR);
             cityList.add(city);
         }
 
