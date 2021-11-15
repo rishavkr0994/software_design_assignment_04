@@ -13,9 +13,16 @@ import java.util.Observable;
  * @since 2021-10-02
  */
 public class WorkSpace extends Observable {
+    private static WorkSpace w = null;
     public static final int DEFAULT_CITY_HEIGHT = 20;
     public static final int DEFAULT_CITY_WIDTH = 20;
     public static final Color DEFAULT_CITY_COLOR = Color.RED;
+    
+    public static synchronized WorkSpace getInstance(){
+        if(w == null)
+            w = new WorkSpace();
+        return w;
+    }
 
     private final List<City> cityList = new ArrayList<>();
     private ArrayList<Route> routeList;
