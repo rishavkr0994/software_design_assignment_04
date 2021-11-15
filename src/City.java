@@ -114,7 +114,6 @@ public class City {
      */
     public void setShape(int choice) {
         //reference - 0: remove, 1: circle, 2: right square, 3: left square, 4: top square, 5: bottom square
-        choice = 5;
         switch (choice) {
             case 0: {
 //                this.shape = this.shape.super;
@@ -138,10 +137,6 @@ public class City {
             }
             case 5: {
                 this.shape = new Square((ShapeInterface) this.shape, 5);
-                break;
-            }
-            case 6: {
-                this.shape = new Square((ShapeInterface) this.shape, 6);
                 break;
             }
         }
