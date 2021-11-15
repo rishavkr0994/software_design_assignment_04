@@ -18,7 +18,6 @@ public class MainFrame extends JFrame implements ActionListener {
     private static final int DEFAULT_WINDOW_HEIGHT = 600;
     private static final int DEFAULT_WINDOW_WIDTH = 800;
 
-    private final WorkSpace workSpace;
     private final WorkSpacePanel drawArea;
 
     /**
@@ -33,11 +32,9 @@ public class MainFrame extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
 
         TSP tsp = new TSP();
+        WorkSpace.getInstance().addObserver(tsp);
 
-        workSpace = new WorkSpace();
-        workSpace.addObserver(tsp);
-
-        drawArea = new WorkSpacePanel(workSpace);
+        drawArea = new WorkSpacePanel();
         tsp.addObserver(drawArea);
         add(drawArea, BorderLayout.CENTER);
 
@@ -98,21 +95,18 @@ public class MainFrame extends JFrame implements ActionListener {
         ButtonGroup actionsButtonGroup = new ButtonGroup();
 
         JRadioButtonMenuItem mItemCreate = new JRadioButtonMenuItem("Create");
-        mItemCreate.setActionCommand("Action_Create");
+        mItemCreate.addChangeListener(e -> drawArea.setMouseActionStrategy(new ActionCreateOperation(this)));
         mItemCreate.setSelected(true);
-        mItemCreate.addActionListener(this);
         actionsButtonGroup.add(mItemCreate);
         actionsMenu.add(mItemCreate);
 
         JRadioButtonMenuItem mItemMove = new JRadioButtonMenuItem("Move");
-        mItemMove.setActionCommand("Action_Move");
-        mItemMove.addActionListener(this);
+        mItemMove.addChangeListener(e -> drawArea.setMouseActionStrategy(new ActionMoveOperation()));
         actionsButtonGroup.add(mItemMove);
         actionsMenu.add(mItemMove);
 
         JRadioButtonMenuItem mItemConnect = new JRadioButtonMenuItem("Connect");
-        mItemConnect.setActionCommand("Action_Connect");
-        mItemConnect.addActionListener(this);
+        mItemConnect.addChangeListener(e -> drawArea.setMouseActionStrategy(new ActionConnectOperation()));
         actionsButtonGroup.add(mItemConnect);
         actionsMenu.add(mItemConnect);
 
@@ -166,20 +160,11 @@ public class MainFrame extends JFrame implements ActionListener {
             case "Connections_UserConnect":
                 onClickConnectionsUserConnect();
                 break;
-            case "Action_Move":
-                onClickActionMove();
-                break;
-            case "Action_Connect":
-                onClickActionConnect();
-                break;
-            case "Action_Create":
-                onClickActionCreate();
-                break;
         }
     }
 
     private void onClickFileNew() {
-        workSpace.clearAllCities();
+        WorkSpace.getInstance().clearAllCities();
         drawArea.repaint();
     }
 
@@ -187,7 +172,7 @@ public class MainFrame extends JFrame implements ActionListener {
         File selectedFile = displayFileSelectionDialog();
         if (selectedFile != null) {
             try {
-                workSpace.load(selectedFile);
+                WorkSpace.getInstance().load(selectedFile);
             } catch (IOException e) {
                 String msg = String.format("Failed To Load Data From File\nException: %s", e);
                 JOptionPane.showMessageDialog(this, msg);
@@ -200,7 +185,7 @@ public class MainFrame extends JFrame implements ActionListener {
         File selectedFile = displayFileSaveDialog();
         if (selectedFile != null) {
             try {
-                workSpace.save(selectedFile);
+                WorkSpace.getInstance().save(selectedFile);
             } catch (IOException e) {
                 String msg = String.format("Failed To Save Data To File\nException: %s", e);
                 JOptionPane.showMessageDialog(this, msg);
@@ -219,15 +204,6 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void onClickConnectionsUserConnect() {
-    }
-
-    private void onClickActionMove() {
-    }
-
-    private void onClickActionConnect() {
-    }
-
-    private void onClickActionCreate() {
     }
 
     private File displayFileSelectionDialog() {

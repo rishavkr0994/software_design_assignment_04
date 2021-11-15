@@ -18,20 +18,19 @@ import java.util.Observer;
  * @since 2021-10-02
  */
 public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotionListener, Observer {
-    private final WorkSpace workSpace;
-
-    City movingCity = null;
-    int preX, preY;
+    private ActionStrategy mouseActionStrategy;
 
     /**
      * Default constructor. It initializes the <code>workSpace</code> object and defines the listeners for the mouse
      * actions.
      */
-    public WorkSpacePanel(WorkSpace workSpace) {
-        this.workSpace = workSpace;
-
+    public WorkSpacePanel() {
         addMouseMotionListener(this);
         addMouseListener(this);
+    }
+
+    public void setMouseActionStrategy(ActionStrategy mouseActionStrategy) {
+        this.mouseActionStrategy = mouseActionStrategy;
     }
 
     /**
@@ -43,13 +42,13 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        java.util.List<Route> routeList = workSpace.getRouteList();
+        java.util.List<Route> routeList = WorkSpace.getInstance().getRouteList();
         if (routeList != null && routeList.size() > 0) {
             for (Route route : routeList)
                 route.getSrc().drawConnect(route.getDest(), g2);
         }
 
-        for (City city : workSpace.getCityList())
+        for (City city : WorkSpace.getInstance().getCityList())
             city.draw(g2);
 
     }
@@ -66,7 +65,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void update(Observable o, Object arg) {
-        workSpace.setRouteList(((TSP)o).getRouteList());
+        WorkSpace.getInstance().setRouteList(((TSP)o).getRouteList());
         repaint();
     }
 
@@ -78,7 +77,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-            City clickedCity = workSpace.getCityList().stream()
+            City clickedCity = WorkSpace.getInstance().getCityList().stream()
                     .filter(x -> x.contains(e.getX(), e.getY()))
                     .findFirst().orElse(null);
 
@@ -102,23 +101,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        movingCity = workSpace.getCityList().stream()
-                .filter(x -> x.contains(e.getX(), e.getY()))
-                .findFirst().orElse(null);
-
-        if (movingCity != null) {
-            preX = movingCity.getX() - e.getX();
-            preY = movingCity.getY() - e.getY();
-            workSpace.moveExistingCity(movingCity, preX + e.getX(), preY + e.getY());
-        }
-        else {
-            String cityName = JOptionPane.showInputDialog(this, "Enter City Name");
-            if (cityName != null && !cityName.isEmpty()) {
-                City city = new City(cityName, e.getX(), e.getY(), WorkSpace.DEFAULT_CITY_WIDTH,
-                        WorkSpace.DEFAULT_CITY_HEIGHT, WorkSpace.DEFAULT_CITY_COLOR);
-                workSpace.addNewCity(city);
-            }
-        }
+        mouseActionStrategy.mousePressed(e);
     }
 
     /**
@@ -136,8 +119,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (movingCity != null)
-            workSpace.moveExistingCity(movingCity, preX + e.getX(), preY + e.getY());
+        mouseActionStrategy.mouseDragged(e);
     }
 
     /**
@@ -157,10 +139,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (movingCity != null && movingCity.contains(e.getX(), e.getY())) {
-            workSpace.moveExistingCity(movingCity, preX + e.getX(), preY + e.getY());
-            movingCity = null;
-        }
+        mouseActionStrategy.mouseReleased(e);
     }
 
     /**

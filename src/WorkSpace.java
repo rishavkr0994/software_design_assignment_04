@@ -13,21 +13,21 @@ import java.util.Observable;
  * @since 2021-10-02
  */
 public class WorkSpace extends Observable {
-    private static WorkSpace w = null;
     public static final int DEFAULT_CITY_HEIGHT = 20;
     public static final int DEFAULT_CITY_WIDTH = 20;
     public static final Color DEFAULT_CITY_COLOR = Color.RED;
-    
-    public static synchronized WorkSpace getInstance(){
-        if(w == null)
-            w = new WorkSpace();
-        return w;
-    }
 
     private final List<City> cityList = new ArrayList<>();
-    private ArrayList<Route> routeList;
+    private ArrayList<Route> routeList = new ArrayList<>();
 
-    public WorkSpace() { }
+    private WorkSpace() { }
+
+    public static WorkSpace _instance = null;
+    public static synchronized WorkSpace getInstance() {
+        if (_instance == null)
+            _instance = new WorkSpace();
+        return _instance;
+    }
 
     /**
      * Add a new city and notify the observers.
@@ -52,6 +52,12 @@ public class WorkSpace extends Observable {
      */
     public void clearAllCities() {
         cityList.clear();
+        setChanged();
+        notifyObservers();
+    }
+
+    public void addNewRoute(Route route) {
+        routeList.add(route);
         setChanged();
         notifyObservers();
     }
