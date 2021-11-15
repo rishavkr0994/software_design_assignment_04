@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -77,8 +78,29 @@ public class WorkSpace extends Observable {
 
         for (String line : lineList) {
             String[] tokens = line.split(" ");
-            City city = new City(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
-                    DEFAULT_CITY_WIDTH, DEFAULT_CITY_HEIGHT, DEFAULT_CITY_COLOR);
+
+            String cityLabel = tokens[0];
+            int cityPosX = Integer.parseInt(tokens[1]);
+            int cityPosY = Integer.parseInt(tokens[2]);
+
+            int citySize = DEFAULT_CITY_HEIGHT;
+            if (tokens.length > 3)
+                citySize = Integer.parseInt(tokens[3]);
+
+            Color cityColor = DEFAULT_CITY_COLOR;
+            if (tokens.length > 4)
+                cityColor = new Color(Integer.parseInt(tokens[4]));
+
+            City city = new City(cityLabel, cityPosX, cityPosY, citySize, citySize, cityColor);
+            if (tokens.length > 5) {
+                String[] decorationTokenList = tokens[5].substring(1, tokens[5].length() - 2).split(",");
+                if (decorationTokenList.length == 5) {
+                    boolean[] options = new boolean[5];
+                    for (int i = 0; i < decorationTokenList.length; i++)
+                        options[i] = Boolean.parseBoolean(decorationTokenList[i]);
+                    city.setOptions(options);
+                }
+            }
             cityList.add(city);
         }
 
@@ -96,7 +118,9 @@ public class WorkSpace extends Observable {
     public void save(File file) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
         for (City city : cityList)
-            writer.write(String.format("%s %d %d\n", city.getLabel(), city.getX(), city.getY()));
+            writer.write(String.format("%s %d %d %d %d %s\n", city.getLabel(), city.getX(), city.getY(),
+                    city.getDimension().height, city.getColor().getRGB(),
+                    Arrays.toString(city.getOptions()).replaceAll("\\s+", "")));
         writer.close();
     }
 
