@@ -14,7 +14,6 @@ public class EditCityDialog extends JDialog {
     public EditCityDialog(JFrame parent, City city) {
         super(parent, "Edit City Properties", true);
         setSize(500, 550);
-        setResizable(false);
         setLocationRelativeTo(parent);
 
         setLayout(new GridBagLayout());
@@ -38,10 +37,28 @@ public class EditCityDialog extends JDialog {
         constraints.insets = new Insets(5, 5, 0, 5);
         add(sizeTextField, constraints);
 
+        JPanel shapeDecorationPanel = new JPanel();
+        shapeDecorationPanel.setBorder(BorderFactory.createTitledBorder("Shape Decoration"));
+        shapeDecorationPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        JCheckBox[] shapeDecorationCheckBoxList = new JCheckBox[5];
+        shapeDecorationCheckBoxList[0] = new JCheckBox("Circle", city.getOptions()[0]);
+        shapeDecorationCheckBoxList[1] = new JCheckBox("Square [North]", city.getOptions()[1]);
+        shapeDecorationCheckBoxList[2] = new JCheckBox("Square [East]", city.getOptions()[2]);
+        shapeDecorationCheckBoxList[3] = new JCheckBox("Square [West]", city.getOptions()[3]);
+        shapeDecorationCheckBoxList[4] = new JCheckBox("Square [South]", city.getOptions()[4]);
+        for (JCheckBox shapeDecorationCheckBox : shapeDecorationCheckBoxList)
+            shapeDecorationPanel.add(shapeDecorationCheckBox);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 2;
+        add(shapeDecorationPanel, constraints);
+
         colorChooser = new JColorChooser(city.getColor());
         colorChooser.setBorder(BorderFactory.createTitledBorder("Color"));
         constraints.gridx = 0;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         constraints.gridwidth = 2;
         constraints.insets = new Insets(5, 5, 0, 5);
         add(colorChooser, constraints);
@@ -49,7 +66,7 @@ public class EditCityDialog extends JDialog {
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.EAST;
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
 
         JButton applyButton = new JButton("Apply");
         applyButton.setActionCommand("Apply");
@@ -60,7 +77,12 @@ public class EditCityDialog extends JDialog {
                 int size = Integer.parseInt(sizeTextField.getText());
                 city.setDimension(new Dimension(size, size));
                 city.setColor(colorChooser.getColor());
-                city.setShape(1);
+
+                boolean[] options = new boolean[5];
+                for(int i = 0; i < shapeDecorationCheckBoxList.length; i++)
+                    options[i] = shapeDecorationCheckBoxList[i].isSelected();
+                city.setOptions(options);
+
                 isUpdated = true;
                 setVisible(false);
             }

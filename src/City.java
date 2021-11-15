@@ -12,10 +12,11 @@ import java.util.Arrays;
  * @since 2021-10-02
  */
 public class City {
+    public static final int DECORATION_OPTION_COUNT = 5;
 
     private String label;
     private Color color;
-    private boolean[] options = new boolean[6];
+    private boolean[] options = new boolean[DECORATION_OPTION_COUNT];
     private ShapeInterface shape; 
 
     /**
@@ -31,8 +32,9 @@ public class City {
         this.label = label;
         this.color = color;
         this.shape = new CityCenter(x, y, h, w);
-        Arrays.fill(options, true);
+        Arrays.fill(options, false);
     }
+
     /**
      * Get the x-coordinate of the upper left corner of the city rectangle
      * @return x-coordinate of the upper left corner of the city rectangle
@@ -89,6 +91,22 @@ public class City {
         shape.setDimension(dimension.height, dimension.width);
     }
 
+    /**
+     * Get the city decoration options.
+     * @return city decoration options.
+     */
+    public boolean[] getOptions() {
+        return options;
+    }
+
+    /**
+     * Set the city decoration options.
+     * @param options city decoration options.
+     */
+    public void setOptions(boolean[] options) {
+        if (options.length == DECORATION_OPTION_COUNT)
+            this.options = Arrays.copyOf(options, options.length);
+    }
 
     /**
      * Set the city shape.
