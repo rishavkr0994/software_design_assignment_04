@@ -65,45 +65,56 @@ public class MainFrame extends JFrame implements ActionListener {
         menuBar.add(fileMenu);
 
         JMenu connectionsMenu = new JMenu("Connections");
+        ButtonGroup connectionsButtonGroup = new ButtonGroup();
 
-        JMenuItem mItemTSPNearestNeighbor = new JMenuItem("TSP - Nearest Neighbor");
+        JRadioButtonMenuItem mItemTSPNearestNeighbor = new JRadioButtonMenuItem("TSP - Nearest Neighbor");
         mItemTSPNearestNeighbor.setActionCommand("Connections_TSPNearestNeighbor");
+        mItemTSPNearestNeighbor.setSelected(true);
         mItemTSPNearestNeighbor.addActionListener(this);
+        connectionsButtonGroup.add(mItemTSPNearestNeighbor);
         connectionsMenu.add(mItemTSPNearestNeighbor);
 
-        JMenuItem mItemTSPPro = new JMenuItem("TSP - Pro");
+        JRadioButtonMenuItem mItemTSPPro = new JRadioButtonMenuItem("TSP - Pro");
         mItemTSPPro.setActionCommand("Connections_TSPPro");
         mItemTSPPro.addActionListener(this);
+        connectionsButtonGroup.add(mItemTSPPro);
         connectionsMenu.add(mItemTSPPro);
 
-        JMenuItem mItemClusters = new JMenuItem("Clusters");
+        JRadioButtonMenuItem mItemClusters = new JRadioButtonMenuItem("Clusters");
         mItemClusters.setActionCommand("Connections_Clusters");
         mItemClusters.addActionListener(this);
+        connectionsButtonGroup.add(mItemClusters);
         connectionsMenu.add(mItemClusters);
 
-        JMenuItem mItemUserConnect = new JMenuItem("User Connect");
+        JRadioButtonMenuItem mItemUserConnect = new JRadioButtonMenuItem("User Connect");
         mItemUserConnect.setActionCommand("Connections_UserConnect");
         mItemUserConnect.addActionListener(this);
+        connectionsButtonGroup.add(mItemUserConnect);
         connectionsMenu.add(mItemUserConnect);
 
         menuBar.add(connectionsMenu);
 
         JMenu actionsMenu = new JMenu("Action");
+        ButtonGroup actionsButtonGroup = new ButtonGroup();
 
-        JMenuItem mItemMove = new JMenuItem("Move");
+        JRadioButtonMenuItem mItemCreate = new JRadioButtonMenuItem("Create");
+        mItemCreate.setActionCommand("Action_Create");
+        mItemCreate.setSelected(true);
+        mItemCreate.addActionListener(this);
+        actionsButtonGroup.add(mItemCreate);
+        actionsMenu.add(mItemCreate);
+
+        JRadioButtonMenuItem mItemMove = new JRadioButtonMenuItem("Move");
         mItemMove.setActionCommand("Action_Move");
         mItemMove.addActionListener(this);
+        actionsButtonGroup.add(mItemMove);
         actionsMenu.add(mItemMove);
 
-        JMenuItem mItemConnect = new JMenuItem("Connect");
+        JRadioButtonMenuItem mItemConnect = new JRadioButtonMenuItem("Connect");
         mItemConnect.setActionCommand("Action_Connect");
         mItemConnect.addActionListener(this);
+        actionsButtonGroup.add(mItemConnect);
         actionsMenu.add(mItemConnect);
-
-        JMenuItem mItemCreate = new JMenuItem("Create");
-        mItemCreate.setActionCommand("Action_Create");
-        mItemCreate.addActionListener(this);
-        actionsMenu.add(mItemCreate);
 
         menuBar.add(actionsMenu);
 
@@ -202,27 +213,21 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void onClickConnectionsTSPPro() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private void onClickConnectionsClusters() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private void onClickConnectionsUserConnect() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private void onClickActionMove() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private void onClickActionConnect() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private void onClickActionCreate() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private File displayFileSelectionDialog() {
