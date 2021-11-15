@@ -13,7 +13,7 @@ public class EditCityDialog extends JDialog {
 
     public EditCityDialog(JFrame parent, City city) {
         super(parent, "Edit City Properties", true);
-        setSize(500, 480);
+        setSize(500, 550);
         setResizable(false);
         setLocationRelativeTo(parent);
 
@@ -60,6 +60,7 @@ public class EditCityDialog extends JDialog {
                 int size = Integer.parseInt(sizeTextField.getText());
                 city.setDimension(new Dimension(size, size));
                 city.setColor(colorChooser.getColor());
+                city.setShape(1);
                 isUpdated = true;
                 setVisible(false);
             }

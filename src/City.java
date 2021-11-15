@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.util.Arrays;
 
 /**
  * This class is the data structure for storing information about a city i.e. the city name and its bounds. It also
@@ -11,9 +12,11 @@ import java.awt.geom.Line2D;
  * @since 2021-10-02
  */
 public class City {
-    private final Rectangle bounds;
+
     private String label;
     private Color color;
+    private boolean[] options = new boolean[6];
+    private ShapeInterface shape; 
 
     /**
      * The constructor to create a new city.
@@ -25,21 +28,22 @@ public class City {
      * @param h height of the city rectangle to be drawn
      */
     public City(String label, int x, int y, int w, int h, Color color) {
-        this.bounds = new Rectangle(x, y, w, h);
         this.label = label;
         this.color = color;
+        this.shape = new CityCenter(x, y, h, w);
+        Arrays.fill(options, true);
     }
     /**
      * Get the x-coordinate of the upper left corner of the city rectangle
      * @return x-coordinate of the upper left corner of the city rectangle
      */
-    public int getX() { return bounds.x; }
+    public int getX() { return this.shape.getX(); }
 
     /**
      * Get the y-coordinate of the upper left corner the city rectangle
      * @return y-coordinate of the upper left corner the city rectangle
      */
-    public int getY() { return bounds.y; }
+    public int getY() { return this.shape.getY(); }
 
     /**
      * Get the city name.
@@ -74,7 +78,7 @@ public class City {
      * @return city dimension.
      */
     public Dimension getDimension() {
-        return bounds.getSize();
+        return shape.getDimension();
     }
 
     /**
@@ -82,7 +86,48 @@ public class City {
      * @param dimension city dimension.
      */
     public void setDimension(Dimension dimension) {
-        bounds.setSize(dimension);
+        shape.setDimension(dimension.height, dimension.width);
+    }
+
+
+    /**
+     * Set the city shape.
+     * @param choice city shape.
+     */
+    public void setShape(int choice) {
+        //reference - 0: remove, 1: circle, 2: right square, 3: left square, 4: top square, 5: bottom square
+        choice = 5;
+        switch (choice) {
+            case 0: {
+//                this.shape = this.shape.super;
+                break;
+            }
+            case 1: {
+                this.shape = new Circle((ShapeInterface) this.shape);
+                break;
+            }
+            case 2: {
+                this.shape = new Square((ShapeInterface) this.shape, 2);
+                break;
+            }
+            case 3: {
+                this.shape = new Square((ShapeInterface) this.shape, 3);
+                break;
+            }
+            case 4: {
+                this.shape = new Square((ShapeInterface) this.shape, 4);
+                break;
+            }
+            case 5: {
+                this.shape = new Square((ShapeInterface) this.shape, 5);
+                break;
+            }
+            case 6: {
+                this.shape = new Square((ShapeInterface) this.shape, 6);
+                break;
+            }
+        }
+
     }
 
     /**
@@ -90,16 +135,7 @@ public class City {
      * @param g graphics object to plot the content
      */
     public void draw(Graphics2D g) {
-        int x = bounds.x, y = bounds.y, h = bounds.height, w = bounds.width;
-        g.setColor(color);
-        g.drawRect(x, y, w, h);
-        Color c = g.getColor();
-        g.setColor(color);
-        g.fillRect(x + 1, y + 1, w - 1, h - 1);
-        g.setColor(Color.black);
-        g.setFont(new Font("Courier", Font.PLAIN, 12));
-        g.drawString(label, x + w, y);
-        g.setColor(c);
+        shape.draw(g, this.color, label);
     }
 
     /**
@@ -108,12 +144,11 @@ public class City {
      * @param y, new y-coordinate of the upper left corner the city rectangle
      */
     public void move(int x, int y) {
-        bounds.x = x;
-        bounds.y = y;
+        this.shape.move(x, y);
     }
 
     private Point center() {
-        return new Point(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+        return new Point(this.shape.getX() + this.shape.getDimension().width / 2, this.shape.getY() + this.shape.getDimension().height / 2);
     }
 
     /**
@@ -134,6 +169,6 @@ public class City {
      * @return whether this city contains the input co-ordinates
      */
     public boolean contains(int x, int y) {
-        return bounds.contains(x, y);
+        return this.shape.contains(x, y);
     }
 }
