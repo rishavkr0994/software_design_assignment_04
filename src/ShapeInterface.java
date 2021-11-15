@@ -15,4 +15,6 @@ interface ShapeInterface {
     boolean contains(int x, int y);
 
     void draw(Graphics2D g, Color color, String label);
+
+    ShapeInterface getBaseShape();
 }

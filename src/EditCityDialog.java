@@ -13,7 +13,7 @@ public class EditCityDialog extends JDialog {
 
     public EditCityDialog(JFrame parent, City city) {
         super(parent, "Edit City Properties", true);
-        setSize(500, 550);
+        setSize(550, 550);
         setLocationRelativeTo(parent);
 
         setLayout(new GridBagLayout());

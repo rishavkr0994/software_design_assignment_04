@@ -35,4 +35,8 @@ public abstract class ShapeDecorator implements ShapeInterface {
     public void draw(Graphics2D g, Color color, String label) {
         this.shape.draw(g, color, label);
     }
+
+    public ShapeInterface getBaseShape() {
+        return shape != null ? shape.getBaseShape() : null;
+    }
 }

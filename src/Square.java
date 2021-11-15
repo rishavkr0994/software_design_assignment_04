@@ -8,26 +8,26 @@ public class Square extends ShapeDecorator {
     public Square(ShapeInterface shape, int type) {
         super(shape);
         this.type = type;
-        if (type == 2) {
+        if (type == 1) {
+            this.rect = new Rectangle(super.getX(), super.getY() + super.getDimension().height, super.getDimension().width, super.getDimension().height);
+        } else if (type == 2) {
             this.rect = new Rectangle(super.getX() + super.getDimension().width, super.getY(), super.getDimension().width, super.getDimension().height);
         } else if (type == 3) {
             this.rect = new Rectangle(super.getX() - super.getDimension().width, super.getY(), super.getDimension().width, super.getDimension().height);
         } else if (type == 4) {
-            this.rect = new Rectangle(super.getX(), super.getY() + super.getDimension().height, super.getDimension().width, super.getDimension().height);
-        } else if (type == 5) {
             this.rect = new Rectangle(super.getX(), super.getY() - super.getDimension().height, super.getDimension().width, super.getDimension().height);
         }
     }
 
     public void move(int x, int y) {
         super.move(x, y);
-        if (this.type == 2) {
+        if (this.type == 1) {
+            this.rect = new Rectangle(super.getX(), super.getY() + super.getDimension().height, super.getDimension().width, super.getDimension().height);
+        } else if (this.type == 2) {
             this.rect = new Rectangle(super.getX() + super.getDimension().width, super.getY(), super.getDimension().width, super.getDimension().height);
         } else if (this.type == 3) {
             this.rect = new Rectangle(super.getX() - super.getDimension().width, super.getY(), super.getDimension().width, super.getDimension().height);
         } else if (this.type == 4) {
-            this.rect = new Rectangle(super.getX(), super.getY() + super.getDimension().height, super.getDimension().width, super.getDimension().height);
-        } else if (this.type == 5) {
             this.rect = new Rectangle(super.getX(), super.getY() - super.getDimension().height, super.getDimension().width, super.getDimension().height);
         }
     }

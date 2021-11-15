@@ -39,6 +39,8 @@ public class CityCenter implements ShapeInterface {
         g.drawRect(rect.x, rect.y, rect.height, rect.width);
         g.fill(rect);
         g.setColor(Color.black);
-        g.drawString(label, rect.x -10, rect.y-8);
+        g.drawString(label, rect.x + rect.width + 5, rect.y - 5);
     }
+
+    public ShapeInterface getBaseShape() { return this; }
 }

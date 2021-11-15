@@ -104,43 +104,14 @@ public class City {
      * @param options city decoration options.
      */
     public void setOptions(boolean[] options) {
-        if (options.length == DECORATION_OPTION_COUNT)
+        if (options.length == DECORATION_OPTION_COUNT) {
             this.options = Arrays.copyOf(options, options.length);
-    }
 
-    /**
-     * Set the city shape.
-     * @param choice city shape.
-     */
-    public void setShape(int choice) {
-        //reference - 0: remove, 1: circle, 2: right square, 3: left square, 4: top square, 5: bottom square
-        switch (choice) {
-            case 0: {
-//                this.shape = this.shape.super;
-                break;
-            }
-            case 1: {
-                this.shape = new Circle((ShapeInterface) this.shape);
-                break;
-            }
-            case 2: {
-                this.shape = new Square((ShapeInterface) this.shape, 2);
-                break;
-            }
-            case 3: {
-                this.shape = new Square((ShapeInterface) this.shape, 3);
-                break;
-            }
-            case 4: {
-                this.shape = new Square((ShapeInterface) this.shape, 4);
-                break;
-            }
-            case 5: {
-                this.shape = new Square((ShapeInterface) this.shape, 5);
-                break;
-            }
+            CityDecorationHandler circleDecorationHandler = new CityCircleDecorationHandler();
+            CityDecorationHandler squareDecorationHandler = new CitySquareDecorationHandler();
+            circleDecorationHandler.setSuccessor(squareDecorationHandler);
+            this.shape = circleDecorationHandler.decorateCityShape(shape.getBaseShape(), options);
         }
-
     }
 
     /**
