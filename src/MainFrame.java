@@ -2,8 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  * This program implements a GUI to display the optimal travel route between a group of cities. The cities can be marked
@@ -37,6 +39,16 @@ public class MainFrame extends JFrame implements ActionListener {
         drawArea = new WorkSpacePanel();
         tsp.addObserver(drawArea);
         add(drawArea, BorderLayout.CENTER);
+
+        JTextArea loggingArea = new JTextArea(10, 50);
+        loggingArea.setEditable(false);
+        loggingArea.setBackground(Color.decode("#F5DEB3"));
+        loggingArea.setForeground(Color.decode("#523A28"));
+        JScrollPane loggingScrollPane = new JScrollPane(loggingArea);
+        add(loggingScrollPane, BorderLayout.SOUTH);
+
+        PrintStream loggingAreaPrintStream = new PrintStream(new TextAreaOutputStream(loggingArea));
+        Logger.getInstance().setOutputStream(loggingAreaPrintStream);
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -95,31 +107,39 @@ public class MainFrame extends JFrame implements ActionListener {
         ButtonGroup actionsButtonGroup = new ButtonGroup();
 
         JRadioButtonMenuItem mItemCreate = new JRadioButtonMenuItem("Create");
-        mItemCreate.addChangeListener(e -> drawArea.setMouseActionStrategy(new ActionCreateOperation(this)));
+        mItemCreate.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to create city");
+                drawArea.setMouseActionStrategy(new ActionCreateOperation(this));
+            }
+        });
         mItemCreate.setSelected(true);
         actionsButtonGroup.add(mItemCreate);
         actionsMenu.add(mItemCreate);
 
         JRadioButtonMenuItem mItemMove = new JRadioButtonMenuItem("Move");
-        mItemMove.addChangeListener(e -> drawArea.setMouseActionStrategy(new ActionMoveOperation()));
+        mItemMove.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to move city");
+                drawArea.setMouseActionStrategy(new ActionMoveOperation());
+            }
+        });
         actionsButtonGroup.add(mItemMove);
         actionsMenu.add(mItemMove);
 
         JRadioButtonMenuItem mItemConnect = new JRadioButtonMenuItem("Connect");
-        mItemConnect.addChangeListener(e -> drawArea.setMouseActionStrategy(new ActionConnectOperation()));
+        mItemConnect.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to connect city");
+                drawArea.setMouseActionStrategy(new ActionConnectOperation());
+            }
+        });
         actionsButtonGroup.add(mItemConnect);
         actionsMenu.add(mItemConnect);
 
         menuBar.add(actionsMenu);
 
         setJMenuBar(menuBar);
-
-        JTextArea loggingArea = new JTextArea(10, 50);
-        loggingArea.setEditable(false);
-        loggingArea.setBackground(Color.decode("#F5DEB3"));
-        loggingArea.setForeground(Color.decode("#523A28"));
-        JScrollPane loggingScrollPane = new JScrollPane(loggingArea);
-        add(loggingScrollPane, BorderLayout.SOUTH);
     }
 
     /**
@@ -194,7 +214,6 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void onClickConnectionsTSPNearestNNeighbor() {
-        JOptionPane.showMessageDialog(this, "Not Implemented !");
     }
 
     private void onClickConnectionsTSPPro() {

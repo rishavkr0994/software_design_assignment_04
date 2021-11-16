@@ -3,8 +3,10 @@ public class CitySquareDecorationHandler extends CityDecorationHandler {
     public ShapeInterface decorateCityShape(ShapeInterface shape, boolean[] options) {
         ShapeInterface decoratedShape = shape;
         for (int i = 1; i < 5; i++) {
-            if (options[i])
+            if (options[i]) {
+                Logger.getInstance().info("[Decorator] Decorating city with square " + i);
                 decoratedShape = new Square(decoratedShape, i);
+            }
         }
 
         if (successor != null)

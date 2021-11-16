@@ -110,6 +110,8 @@ public class City {
             CityDecorationHandler circleDecorationHandler = new CityCircleDecorationHandler();
             CityDecorationHandler squareDecorationHandler = new CitySquareDecorationHandler();
             circleDecorationHandler.setSuccessor(squareDecorationHandler);
+
+            Logger.getInstance().info("[Chain of Responsibility] Decorating city using chain of responsibility");
             this.shape = circleDecorationHandler.decorateCityShape(shape.getBaseShape(), options);
         }
     }
