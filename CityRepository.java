@@ -1,3 +1,4 @@
+//https://www.tutorialspoint.com/design_pattern/iterator_pattern.htm
 public class CityRepository implements Container {
    ArrayList<City> cityList = new ArrayList<>;
 
