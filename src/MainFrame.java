@@ -33,7 +33,7 @@ public class MainFrame extends JFrame implements ActionListener {
         super("Travelling Salesman Path Plotting Tool");
         setLayout(new BorderLayout());
 
-        TSP tsp = new TSP();
+        TSP tsp = new TSP(); // TODO: Replace with the algorithm strategy context class. It should take care of the Observer, Observable thing
         WorkSpace.getInstance().addObserver(tsp);
 
         drawArea = new WorkSpacePanel();
@@ -44,6 +44,7 @@ public class MainFrame extends JFrame implements ActionListener {
         loggingArea.setEditable(false);
         loggingArea.setBackground(Color.decode("#F5DEB3"));
         loggingArea.setForeground(Color.decode("#523A28"));
+        loggingArea.setFont(new Font("Consolas", Font.PLAIN, 12));
         JScrollPane loggingScrollPane = new JScrollPane(loggingArea);
         add(loggingScrollPane, BorderLayout.SOUTH);
 
@@ -77,27 +78,43 @@ public class MainFrame extends JFrame implements ActionListener {
         ButtonGroup connectionsButtonGroup = new ButtonGroup();
 
         JRadioButtonMenuItem mItemTSPNearestNeighbor = new JRadioButtonMenuItem("TSP - Nearest Neighbor");
-        mItemTSPNearestNeighbor.setActionCommand("Connections_TSPNearestNeighbor");
+        mItemTSPNearestNeighbor.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Nearest Neighbor");
+                // TODO: Set the strategy in context class here
+            }
+        });
         mItemTSPNearestNeighbor.setSelected(true);
-        mItemTSPNearestNeighbor.addActionListener(this);
         connectionsButtonGroup.add(mItemTSPNearestNeighbor);
         connectionsMenu.add(mItemTSPNearestNeighbor);
 
         JRadioButtonMenuItem mItemTSPPro = new JRadioButtonMenuItem("TSP - Pro");
-        mItemTSPPro.setActionCommand("Connections_TSPPro");
-        mItemTSPPro.addActionListener(this);
+        mItemTSPPro.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Pro");
+                // TODO: Set the strategy in context class here
+            }
+        });
         connectionsButtonGroup.add(mItemTSPPro);
         connectionsMenu.add(mItemTSPPro);
 
         JRadioButtonMenuItem mItemClusters = new JRadioButtonMenuItem("Clusters");
-        mItemClusters.setActionCommand("Connections_Clusters");
-        mItemClusters.addActionListener(this);
+        mItemClusters.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to Clusters");
+                // TODO: Set the strategy in context class here
+            }
+        });
         connectionsButtonGroup.add(mItemClusters);
         connectionsMenu.add(mItemClusters);
 
         JRadioButtonMenuItem mItemUserConnect = new JRadioButtonMenuItem("User Connect");
-        mItemUserConnect.setActionCommand("Connections_UserConnect");
-        mItemUserConnect.addActionListener(this);
+        mItemUserConnect.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to User Connect");
+                // TODO: Set the strategy in context class here (in this case maybe just set to null as no algorithm runs)
+            }
+        });
         connectionsButtonGroup.add(mItemUserConnect);
         connectionsMenu.add(mItemUserConnect);
 
@@ -167,18 +184,6 @@ public class MainFrame extends JFrame implements ActionListener {
                 break;
             case "File_Save":
                 onClickFileSave();
-                break;
-            case "Connections_TSPNearestNeighbor":
-                onClickConnectionsTSPNearestNNeighbor();
-                break;
-            case "Connections_TSPPro":
-                onClickConnectionsTSPPro();
-                break;
-            case "Connections_Clusters":
-                onClickConnectionsClusters();
-                break;
-            case "Connections_UserConnect":
-                onClickConnectionsUserConnect();
                 break;
         }
     }

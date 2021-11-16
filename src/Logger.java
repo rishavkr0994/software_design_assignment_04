@@ -3,7 +3,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 public class Logger {
-    private static final String LOG_FORMAT = "%-15s%-10s%s\n";
+    private static final String LOG_FORMAT = "%-10s%-7s%s\n";
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
     private static Logger _instance = null;
