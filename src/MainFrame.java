@@ -33,7 +33,6 @@ public class MainFrame extends JFrame implements ActionListener {
         super("Travelling Salesman Path Plotting Tool");
         setLayout(new BorderLayout());
 
-        //TSP tsp = new TSP(); // TODO: Replace with the algorithm strategy context class. It should take care of the Observer, Observable thing
         ConnectionContext connectionContext = new ConnectionContext();
         WorkSpace.getInstance().addObserver(connectionContext);
 
@@ -82,7 +81,6 @@ public class MainFrame extends JFrame implements ActionListener {
         mItemTSPNearestNeighbor.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Nearest Neighbor");
-                // TODO: Set the strategy in context class here
                 connectionContext.setStrategy(new ConnectionTSPNearestNeighbour());
             }
         });
@@ -94,7 +92,6 @@ public class MainFrame extends JFrame implements ActionListener {
         mItemTSPPro.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Pro");
-                // TODO: Set the strategy in context class here
                 connectionContext.setStrategy(new ConnectionTSPPro());
             }
         });
@@ -105,7 +102,6 @@ public class MainFrame extends JFrame implements ActionListener {
         mItemClusters.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to Clusters");
-                // TODO: Set the strategy in context class here
                 connectionContext.setStrategy(new ConnectionClustering());
             }
         });
@@ -116,7 +112,6 @@ public class MainFrame extends JFrame implements ActionListener {
         mItemUserConnect.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to User Connect");
-                // TODO: Set the strategy in context class here (in this case maybe just set to null as no algorithm runs)
                 connectionContext.setStrategy(null);
             }
         });

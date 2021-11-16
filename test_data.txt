@@ -1,0 +1,8 @@
+A 315 34 15 -65536 [false,true,true,false,false]
+B 136 83 20 -16776961 [true,true,false,false,false]
+C 312 251 20 -3407668 [true,false,false,true,true]
+D 567 103 40 -13395712 [true,true,true,true,true]
+E 455 83 20 -16777216 [true,false,false,false,false]
+F 312 188 20 -13434727 [false,true,true,false,false]
+G 578 277 20 -16737895 [true,false,true,true,false]
+H 135 251 20 -65536 [false,false,false,false,false]

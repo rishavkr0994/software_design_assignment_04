@@ -44,9 +44,8 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         List<List<Route>> routeList2 = WorkSpace.getInstance().getRouteList();
-        
-        for(List<Route> routeList: routeList2)
-        {
+
+        for(List<Route> routeList : routeList2) {
         	if (routeList != null && routeList.size() > 0) {
         		for (Route route : routeList)
         			route.getSrc().drawConnect(route.getDest(), g2);
@@ -70,7 +69,6 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void update(Observable o, Object arg) {
-        WorkSpace.getInstance().setRouteList(((ConnectionContext)o).getRouteList());
         repaint();
     }
 

@@ -54,7 +54,10 @@ public class WorkSpace extends Observable {
     }
 
     public void addNewRoute(Route route) {
+        if (routeList.size() == 0)
+            routeList.add(new ArrayList<>());
         routeList.get(0).add(route);
+
         setChanged();
         notifyObservers();
     }
