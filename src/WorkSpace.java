@@ -15,7 +15,7 @@ import java.util.Observable;
  */
 public class WorkSpace extends Observable {
     private final List<City> cityList = new ArrayList<>();
-    private ArrayList<Route> routeList = new ArrayList<>();
+    private List<List<Route>> routeList = new ArrayList<>();
 
     private WorkSpace() { }
 
@@ -54,7 +54,7 @@ public class WorkSpace extends Observable {
     }
 
     public void addNewRoute(Route route) {
-        routeList.add(route);
+        routeList.get(0).add(route);
         setChanged();
         notifyObservers();
     }
@@ -134,7 +134,7 @@ public class WorkSpace extends Observable {
      * Get the route information.
      * @return route information
      */
-    public List<Route> getRouteList() {
+    public List<List<Route>> getRouteList() {
         return routeList;
     }
 
@@ -142,7 +142,7 @@ public class WorkSpace extends Observable {
      * Set the route information.
      * @param routeList route information
      */
-    public void setRouteList(ArrayList<Route> routeList) {
+    public void setRouteList(List<List<Route>> routeList) {
         this.routeList = routeList;
     }
 

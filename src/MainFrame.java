@@ -33,11 +33,12 @@ public class MainFrame extends JFrame implements ActionListener {
         super("Travelling Salesman Path Plotting Tool");
         setLayout(new BorderLayout());
 
-        TSP tsp = new TSP(); // TODO: Replace with the algorithm strategy context class. It should take care of the Observer, Observable thing
-        WorkSpace.getInstance().addObserver(tsp);
+        //TSP tsp = new TSP(); // TODO: Replace with the algorithm strategy context class. It should take care of the Observer, Observable thing
+        ConnectionContext connectionContext = new ConnectionContext();
+        WorkSpace.getInstance().addObserver(connectionContext);
 
         drawArea = new WorkSpacePanel();
-        tsp.addObserver(drawArea);
+        connectionContext.addObserver(drawArea);
         add(drawArea, BorderLayout.CENTER);
 
         JTextArea loggingArea = new JTextArea(10, 50);
@@ -82,6 +83,7 @@ public class MainFrame extends JFrame implements ActionListener {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Nearest Neighbor");
                 // TODO: Set the strategy in context class here
+                connectionContext.setStrategy(new ConnectionTSPNearestNeighbour());
             }
         });
         mItemTSPNearestNeighbor.setSelected(true);
@@ -93,6 +95,7 @@ public class MainFrame extends JFrame implements ActionListener {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Pro");
                 // TODO: Set the strategy in context class here
+                connectionContext.setStrategy(new ConnectionTSPPro());
             }
         });
         connectionsButtonGroup.add(mItemTSPPro);
@@ -103,6 +106,7 @@ public class MainFrame extends JFrame implements ActionListener {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to Clusters");
                 // TODO: Set the strategy in context class here
+                connectionContext.setStrategy(new ConnectionClustering());
             }
         });
         connectionsButtonGroup.add(mItemClusters);
@@ -113,6 +117,7 @@ public class MainFrame extends JFrame implements ActionListener {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to User Connect");
                 // TODO: Set the strategy in context class here (in this case maybe just set to null as no algorithm runs)
+                connectionContext.setStrategy(null);
             }
         });
         connectionsButtonGroup.add(mItemUserConnect);

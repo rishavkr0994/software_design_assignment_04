@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.List;
 
 /**
  * A panel to display the cities and the route between them. It allows marking of a new city with a mouse click and also
@@ -42,10 +43,14 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        java.util.List<Route> routeList = WorkSpace.getInstance().getRouteList();
-        if (routeList != null && routeList.size() > 0) {
-            for (Route route : routeList)
-                route.getSrc().drawConnect(route.getDest(), g2);
+        List<List<Route>> routeList2 = WorkSpace.getInstance().getRouteList();
+        
+        for(List<Route> routeList: routeList2)
+        {
+        	if (routeList != null && routeList.size() > 0) {
+        		for (Route route : routeList)
+        			route.getSrc().drawConnect(route.getDest(), g2);
+        	}
         }
 
         for (City city : WorkSpace.getInstance().getCityList())
@@ -65,7 +70,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      */
     @Override
     public void update(Observable o, Object arg) {
-        WorkSpace.getInstance().setRouteList(((TSP)o).getRouteList());
+        WorkSpace.getInstance().setRouteList(((ConnectionContext)o).getRouteList());
         repaint();
     }
 
