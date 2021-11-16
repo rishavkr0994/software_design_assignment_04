@@ -9,7 +9,11 @@
 public class Route {
     private City src;
     private City dest;
-    private double dist;
+
+    public Route(City src, City dest) {
+        this.src = src;
+        this.dest = dest;
+    }
 
     /**
      * Get the source city.
@@ -41,21 +45,5 @@ public class Route {
      */
     public void setDest(City dest) {
         this.dest = dest;
-    }
-
-    /**
-     * Get the route distance.
-     * @return route distance
-     */
-    public double getDist() {
-        return dist;
-    }
-
-    /**
-     * Set the route distance.
-     * @param distance route distance
-     */
-    public void setDist(double distance) {
-        this.dist = distance;
     }
 }

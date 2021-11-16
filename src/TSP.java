@@ -61,10 +61,7 @@ public class TSP extends Observable implements Observer {
 
             rowFlag[i] = 0; colFlag[j] = 0;
 
-            Route route = new Route();
-            route.setSrc(cityList.get(i));
-            route.setDest(cityList.get(j));
-            route.setDist(distanceMatrix[i][j]);
+            Route route = RouteFactory.getInstance().getRoute(cityList.get(i), cityList.get(j));
             result.add(route);
 
             i = j;

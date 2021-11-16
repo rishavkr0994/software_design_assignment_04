@@ -12,6 +12,8 @@ import java.util.Arrays;
  * @since 2021-10-02
  */
 public class City {
+    public static final int DEFAULT_SIZE = 20;
+    public static final Color DEFAULT_COLOR = Color.RED;
     public static final int DECORATION_OPTION_COUNT = 5;
 
     private String label;
@@ -25,13 +27,11 @@ public class City {
      * @param label city name
      * @param x x-coordinate of the upper left corner of the city rectangle to be drawn
      * @param y y-coordinate of the upper left corner of the city rectangle to be drawn
-     * @param w width of the city rectangle to be drawn
-     * @param h height of the city rectangle to be drawn
      */
-    public City(String label, int x, int y, int w, int h, Color color) {
+    public City(String label, int x, int y) {
         this.label = label;
-        this.color = color;
-        this.shape = new CityCenter(x, y, h, w);
+        this.color = DEFAULT_COLOR;
+        this.shape = new CityCenter(x, y, DEFAULT_SIZE, DEFAULT_SIZE);
         Arrays.fill(options, false);
     }
 

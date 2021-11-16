@@ -9,9 +9,7 @@ public class ActionConnectOperation extends ActionStrategy {
                     .findFirst().orElse(null);
 
             if (destinationCity != null && destinationCity != clickedCity) {
-                Route route = new Route();
-                route.setSrc(clickedCity);
-                route.setDest(destinationCity);
+                Route route = RouteFactory.getInstance().getRoute(clickedCity, destinationCity);
                 WorkSpace.getInstance().addNewRoute(route);
             }
             clickedCity = null;

@@ -14,10 +14,6 @@ import java.util.Observable;
  * @since 2021-10-02
  */
 public class WorkSpace extends Observable {
-    public static final int DEFAULT_CITY_HEIGHT = 20;
-    public static final int DEFAULT_CITY_WIDTH = 20;
-    public static final Color DEFAULT_CITY_COLOR = Color.RED;
-
     private final List<City> cityList = new ArrayList<>();
     private ArrayList<Route> routeList = new ArrayList<>();
 
@@ -82,16 +78,18 @@ public class WorkSpace extends Observable {
             String cityLabel = tokens[0];
             int cityPosX = Integer.parseInt(tokens[1]);
             int cityPosY = Integer.parseInt(tokens[2]);
+            City city = CityFactory.getInstance().getCity(cityLabel, cityPosX, cityPosY);
 
-            int citySize = DEFAULT_CITY_HEIGHT;
+            int citySize = City.DEFAULT_SIZE;
             if (tokens.length > 3)
                 citySize = Integer.parseInt(tokens[3]);
+            city.setDimension(new Dimension(citySize, citySize));
 
-            Color cityColor = DEFAULT_CITY_COLOR;
+            Color cityColor = City.DEFAULT_COLOR;
             if (tokens.length > 4)
                 cityColor = new Color(Integer.parseInt(tokens[4]));
+            city.setColor(cityColor);
 
-            City city = new City(cityLabel, cityPosX, cityPosY, citySize, citySize, cityColor);
             if (tokens.length > 5) {
                 String[] decorationTokenList = tokens[5].substring(1, tokens[5].length() - 2).split(",");
                 if (decorationTokenList.length == 5) {
