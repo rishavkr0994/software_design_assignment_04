@@ -14,7 +14,7 @@ import java.util.List;
  * It implements the <tt>Observer</tt> interface so that it can observe an <tt><Observable</tt> (in our case, it is the
  * TSP class) and redraw the panel.
  *
- * @author Zhuoran Li, Rishav Kumar
+ * @author Zhuoran Li, Rishav Kumar, Aru Raghwanshi
  * @version 1.0
  * @since 2021-10-02
  */

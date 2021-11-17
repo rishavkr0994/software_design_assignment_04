@@ -1,6 +1,12 @@
 
 import java.util.*;
 
+/**
+ * This class is responsible for computing the required permutations 
+ * and calculating the shortest path using the actual solution to the TSP.
+ * @author Aru Raghuwanshi
+ *
+ */
 
 public class TSPPro {
 
@@ -13,11 +19,11 @@ public class TSPPro {
 		permutations = new ArrayList<>();
 	}
 	
-	public void generatePermutations() {     
+	private void generatePermutations() {     
         permute(new ArrayList<City>());
     }
     
-    public void permute(List<City> current)
+    private void permute(List<City> current)
     {
         if(current.size() == cityList.size())
         {
@@ -37,6 +43,10 @@ public class TSPPro {
         }
     }
     
+    /**
+     * This method calculates the shortestPath by leveraging the generated permutations and distance algorithms.
+     * @return
+     */
     public List<City> calculateShortestPath()
     {
     	List<City> shortestPath = new ArrayList<>();

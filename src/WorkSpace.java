@@ -9,7 +9,7 @@ import java.util.Observable;
  * A repository which contains the city list and route information. It extends the </tt>Observable</tt> class, so that
  * it can notify its <tt>Observer</tt> for updates i.e. when a new city is added or an existing city is moved.
  *
- * @author Zhuoran Li, Rishav Kumar
+ * @author Zhuoran Li, Rishav Kumar, Aru Raghuwanshi
  * @version 1.0
  * @since 2021-10-02
  */

@@ -12,7 +12,7 @@ import java.io.PrintStream;
  * on screen with a mouse click. Also, the marked cities can be moved to a new location by clicking and dragging it. The
  * program also supports additional functions to clear the screen and load/save the city data from/to a text file.
  *
- * @author Zhuoran Li, Rishav Kumar
+ * @author Zhuoran Li, Rishav Kumar, Aru Raghuwanshi
  * @version 1.0
  * @since 2021-10-02
  */

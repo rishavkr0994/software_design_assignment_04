@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for solving the the connection strategy using the clustering algorithm.
+ * @author Aru Raghuwanshi
+ *
+ */
 public class ConnectionClustering extends ConnectionStrategy {
 	public List<List<Route>> solve(List<City> cityList) {
 		int maxX = cityList.get(0).getX();
@@ -16,11 +21,11 @@ public class ConnectionClustering extends ConnectionStrategy {
 		}
 		
 		List<List<Route>> routeList2 = new ArrayList<>();
-		
-		routeList2.add(super.solveTSPNN(getCluster(cityList, minX, (maxY+minY)/2, (maxX+minX)/2, maxY)));
-		routeList2.add(super.solveTSPNN(getCluster(cityList, (maxX+minX)/2, (maxY+minY)/2, maxX, maxY)));
-		routeList2.add(super.solveTSPNN(getCluster(cityList, minX, minY, (maxX+minX)/2, (maxY+minY)/2)));
-		routeList2.add(super.solveTSPNN(getCluster(cityList, (maxX+minX)/2, minY, maxX, (maxY+minY)/2)));
+		ConnectionTSPNearestNeighbour tspNN = new ConnectionTSPNearestNeighbour();
+		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, minX, (maxY+minY)/2, (maxX+minX)/2, maxY)));
+		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, (maxX+minX)/2, (maxY+minY)/2, maxX, maxY)));
+		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, minX, minY, (maxX+minX)/2, (maxY+minY)/2)));
+		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, (maxX+minX)/2, minY, maxX, (maxY+minY)/2)));
 		
 		return routeList2;
 	}
