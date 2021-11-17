@@ -34,10 +34,11 @@ public class MainFrame extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
 
         ConnectionContext connectionContext = new ConnectionContext();
-        WorkSpace.getInstance().addObserver(connectionContext);
+        CityRepository.getInstance().addObserver(connectionContext);
 
         drawArea = new WorkSpacePanel();
-        connectionContext.addObserver(drawArea);
+        CityRepository.getInstance().addObserver(drawArea);
+        RouteRepository.getInstance().addObserver(drawArea);
         add(drawArea, BorderLayout.CENTER);
 
         JTextArea loggingArea = new JTextArea(10, 50);
@@ -189,7 +190,7 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void onClickFileNew() {
-        WorkSpace.getInstance().clearAllCities();
+        CityRepository.getInstance().clearAllCities();
         drawArea.repaint();
     }
 
@@ -197,7 +198,7 @@ public class MainFrame extends JFrame implements ActionListener {
         File selectedFile = displayFileSelectionDialog();
         if (selectedFile != null) {
             try {
-                WorkSpace.getInstance().load(selectedFile);
+                CityRepository.getInstance().load(selectedFile);
             } catch (IOException e) {
                 String msg = String.format("Failed To Load Data From File\nException: %s", e);
                 JOptionPane.showMessageDialog(this, msg);
@@ -210,7 +211,7 @@ public class MainFrame extends JFrame implements ActionListener {
         File selectedFile = displayFileSaveDialog();
         if (selectedFile != null) {
             try {
-                WorkSpace.getInstance().save(selectedFile);
+                CityRepository.getInstance().save(selectedFile);
             } catch (IOException e) {
                 String msg = String.format("Failed To Save Data To File\nException: %s", e);
                 JOptionPane.showMessageDialog(this, msg);

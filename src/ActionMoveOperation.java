@@ -9,20 +9,20 @@ public class ActionMoveOperation extends ActionStrategy {
         if (clickedCity != null) {
             preX = clickedCity.getX() - e.getX();
             preY = clickedCity.getY() - e.getY();
-            WorkSpace.getInstance().moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
+            CityRepository.getInstance().moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         if (clickedCity != null)
-            WorkSpace.getInstance().moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
+            CityRepository.getInstance().moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         if (clickedCity != null) {
-            WorkSpace.getInstance().moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
+            CityRepository.getInstance().moveExistingCity(clickedCity, preX + e.getX(), preY + e.getY());
             clickedCity = null;
         }
     }

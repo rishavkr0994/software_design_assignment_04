@@ -33,7 +33,7 @@ public class TSP extends Observable implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        List<City> cityList = ((WorkSpace)o).getCityList();
+        List<City> cityList = ((CityRepository)o).getCityList();
         if (cityList.size() > 0)
             routeList = calculateShortestRoute(cityList);
         else routeList = new ArrayList<>();
