@@ -25,7 +25,7 @@ public abstract class ConnectionStrategy {
 		
 		int prev = 0;
 		for(int i = 1; i < cityList.size(); i++) {
-			Route route = new Route(cityList.get(prev), cityList.get(i));
+			Route route = RouteFactory.getInstance().getRoute(cityList.get(prev), cityList.get(i));
 			// route.setDist(TSPPro.getEuclideanDistance(cityList.get(prev), cityList.get(i)));
 			routeList.add(route);
 			prev = i;

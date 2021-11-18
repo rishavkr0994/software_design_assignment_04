@@ -82,21 +82,6 @@ public class RouteRepository extends Observable implements Container{
      */
     @Override
     public Iterator getIterator() {
-        return new Iterator() {
-            int index;
-
-            @Override
-            public boolean hasNext() {
-                return index < routeList.size();
-            }
-
-            @Override
-            public Object next() {
-                if(this.hasNext()){
-                    return routeList.get(index++);
-                }
-                return null;
-            }
-        };
+        return new ObjectIterator<>(routeList);
     }
 }

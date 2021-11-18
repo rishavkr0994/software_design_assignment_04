@@ -143,20 +143,6 @@ public class CityRepository extends Observable implements Container {
      */
     @Override
     public Iterator getIterator() {
-        return new Iterator() {
-            int index;
-            @Override
-            public boolean hasNext() {
-                return index < cityList.size();
-            }
-
-            @Override
-            public Object next() {
-                if(this.hasNext()){
-                    return cityList.get(index++);
-                }
-                return null;
-            }
-        };
+        return new ObjectIterator<>(cityList);
     }
 }
