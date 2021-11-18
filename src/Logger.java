@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 /** Responsible for printing the status of the program to the console.
  * Implements the singleton pattern.
  *
- * @author
+ * @author Sasanka Gali
  * @version 1.0
  * @since 2021-11-12
  */
