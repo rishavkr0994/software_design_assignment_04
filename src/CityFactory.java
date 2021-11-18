@@ -6,6 +6,7 @@
  * @since 2021-11-12
  */
 public class CityFactory extends AbstractCityFactory {
+
     private static CityFactory _instance = null;
 
     private CityFactory() {
@@ -13,6 +14,7 @@ public class CityFactory extends AbstractCityFactory {
 
     /**
      * Gets the common instance of <code>CityFactory</code>.
+     * <p>
      * NOTE: When this function is first invoked, a new instance is created and the same is returned. In future
      * invocations, the previously created instance is returned.
      *

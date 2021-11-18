@@ -6,6 +6,7 @@
  * @since 2021-11-12
  */
 public class RouteFactory extends AbstractRouteFactory {
+
     private static RouteFactory _instance = null;
 
     private RouteFactory() {
@@ -13,6 +14,7 @@ public class RouteFactory extends AbstractRouteFactory {
 
     /**
      * Gets the common instance of <code>RouteFactory</code>.
+     * <p>
      * NOTE: When this function is first invoked, a new instance is created and the same is returned. In future
      * invocations, the previously created instance is returned.
      *

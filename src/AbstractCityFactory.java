@@ -5,6 +5,7 @@
  * @since 2021-11-12
  */
 public abstract class AbstractCityFactory {
+
     /**
      * Creates an instance of <code>City</code> with the specified attributes and returns it
      *

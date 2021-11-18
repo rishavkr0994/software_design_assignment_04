@@ -5,6 +5,7 @@
  * @since 2021-11-12
  */
 public abstract class AbstractRouteFactory {
+
     /**
      * Creates an instance of <code>Route</code> between the specified source and destination cities and returns it
      *
