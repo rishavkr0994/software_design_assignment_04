@@ -1,4 +1,5 @@
-/** A concrete factory which extends <code>AbstractRouteFactory</code>. It also implements the Singleton pattern to
+/**
+ * A concrete factory which extends <code>AbstractRouteFactory</code>. It also implements the Singleton pattern to
  * provide for common access to a factory for generating <code>Route</code> instances.
  *
  * @author Rishav Kumar

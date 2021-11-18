@@ -1,6 +1,5 @@
 /**
- * This class is the data structure for route information between two cities i.e. the source, destination cities and
- * the distance between them.
+ * This class is the data structure for storing information about a route i.e. source and destination city.
  *
  * @author Zhuoran Li, Rishav Kumar
  * @version 1.0
@@ -10,13 +9,19 @@ public class Route {
     private City src;
     private City dest;
 
+    /**
+     * The constructor to create a new route.
+     *
+     * @param src source city
+     * @param dest destination city
+     */
     public Route(City src, City dest) {
         this.src = src;
         this.dest = dest;
     }
 
     /**
-     * Get the source city.
+     * Gets the source city.
      * @return source city
      */
     public City getSrc() {
@@ -24,7 +29,7 @@ public class Route {
     }
 
     /**
-     * Set the source city.
+     * Sets the source city.
      * @param src source city
      */
     public void setSrc(City src) {
@@ -32,7 +37,7 @@ public class Route {
     }
 
     /**
-     * Get the destination city.
+     * Gets the destination city.
      * @return destination city
      */
     public City getDest() {
@@ -40,7 +45,7 @@ public class Route {
     }
 
     /**
-     * Set the destination city.
+     * Sets the destination city.
      * @param dest destination city
      */
     public void setDest(City dest) {

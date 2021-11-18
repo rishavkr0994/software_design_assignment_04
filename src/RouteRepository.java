@@ -2,13 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-/** Responsible for managing the route database. Also implements the iterator.
+/**
+ * This class is the repository for routes and provides functions to add / remove route.
+ * <p>
+ * It extends <code>Observable</code> and notifies its observers whenever there is a change in the repository data. It
+ * also provides an iterator for the list of route contained within it.
  *
  * @author
  * @version 1.0
  * @since 2021-11-12
  */
-
 public class RouteRepository extends Observable implements Container{
     private List<List<Route>> routeList = new ArrayList<>();
     private Route danglingRoute = null;
