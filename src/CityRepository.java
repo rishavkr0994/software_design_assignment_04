@@ -5,8 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
-//https://www.tutorialspoint.com/design_pattern/iterator_pattern.htm
-public class CityRepository extends Observable {
+public class CityRepository extends Observable implements Container {
     private final List<City> cityList = new ArrayList<>();
 
     private CityRepository() { }
@@ -124,5 +123,27 @@ public class CityRepository extends Observable {
             fileTextStringBuilder.append(lineText).append("\n");
         }
         return fileTextStringBuilder.toString();
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new Iterator() {
+            int index;
+            @Override
+            public boolean hasNext() {
+                if(index < cityList.size()){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public Object next() {
+                if(this.hasNext()){
+                    return cityList.get(index++);
+                }
+                return null;
+            }
+        };
     }
 }

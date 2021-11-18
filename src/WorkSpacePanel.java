@@ -43,21 +43,21 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        List<List<Route>> routeList2 = RouteRepository.getInstance().getRouteList();
 
-        for(List<Route> routeList : routeList2) {
-        	if (routeList != null && routeList.size() > 0) {
-        		for (Route route : routeList)
-        			route.getSrc().drawConnect(route.getDest(), g2);
-        	}
+        for (Iterator routeIter = RouteRepository.getInstance().getIterator(); routeIter.hasNext();){
+            List<Route> routeList = (List<Route>) routeIter.next();
+            if(routeList != null && routeList.size() >  0){
+                for(Route route : routeList)
+                    route.getSrc().drawConnect(route.getDest(), g2);
+            }
         }
 
         Route danglingRoute = RouteRepository.getInstance().getDanglingRoute();
         if (danglingRoute != null)
             danglingRoute.getSrc().drawConnect(danglingRoute.getDest(), g2);
 
-        for (City city : CityRepository.getInstance().getCityList())
-            city.draw(g2);
+        for(Iterator iter = CityRepository.getInstance().getIterator(); iter.hasNext();)
+            ((City) iter.next()).draw(g2);
     }
 
     /**

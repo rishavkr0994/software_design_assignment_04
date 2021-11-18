@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class RouteRepository extends Observable {
+public class RouteRepository extends Observable implements Container{
     private List<List<Route>> routeList = new ArrayList<>();
     private Route danglingRoute = null;
 
@@ -58,5 +58,28 @@ public class RouteRepository extends Observable {
         this.danglingRoute = route;
         setChanged();
         notifyObservers();
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new Iterator() {
+            int index;
+
+            @Override
+            public boolean hasNext() {
+                if(index < routeList.size()){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public Object next() {
+                if(this.hasNext()){
+                    return routeList.get(index++);
+                }
+                return null;
+            }
+        };
     }
 }
