@@ -3,13 +3,16 @@ import java.util.List;
 
 /**
  * This class is responsible for executing the connection strategy using the TSP Nearest Neighbour algorithm.
- * @author Aru Raghuwanshi
  *
+ * @author Aru Raghuwanshi
+ * @version 1.0
+ * @since 2021-11-12
  */
 public class ConnectionTSPNearestNeighbour extends ConnectionStrategy {
 	
 	/**
 	 * This method solves the TSP Nearest Neighbour and returns it in a desired data structure format.
+	 *
 	 * @param cityList
 	 * @return nested list of routes
 	 */
@@ -18,8 +21,10 @@ public class ConnectionTSPNearestNeighbour extends ConnectionStrategy {
 		routeList2.add(solveTSPNN(cityList));
 		return routeList2;
 	}
+
 	/**
 	 * This method is a helper for solving the TSP Nearest Neighbour using a Greedy Approach.
+	 *
 	 * @param cityList
 	 * @return list of Routes
 	 */
@@ -31,8 +36,7 @@ public class ConnectionTSPNearestNeighbour extends ConnectionStrategy {
 		City minCity = null;
 		float minDistance = Float.MAX_VALUE;
 		
-		if(cityListCopy.size() == 0)
-		{
+		if (cityListCopy.size() == 0) {
 			return new ArrayList<Route>();
 		}
 		x1 = cityListCopy.get(0).getX();
@@ -57,8 +61,8 @@ public class ConnectionTSPNearestNeighbour extends ConnectionStrategy {
 
 			cityListCopy.remove(minCity);
 
-			x1 = (int)minCity.getX();
-			y1 = (int)minCity.getY();
+			x1 = (int) minCity.getX();
+			y1 = (int) minCity.getY();
 
 			minDistance = Integer.MAX_VALUE;
 		}

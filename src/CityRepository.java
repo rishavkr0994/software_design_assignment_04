@@ -5,14 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
-/** Responsible for managing the city database. Also implements the iterator.
+/**
+ * This class is the repository for cities and provides functions to add, move and clear cities. Additionally, it also
+ * provides functions to load / save the data from / to a file.
+ * <p>
+ * It extends <code>Observable</code> and notifies its observers whenever there is a change in the repository data. It
+ * also provides an iterator for the list of cities contained within it.
  *
  * @author
  * @version 1.0
  * @since 2021-11-12
  */
-
 public class CityRepository extends Observable implements Container {
+
     private final List<City> cityList = new ArrayList<>();
 
     private CityRepository() { }
@@ -20,8 +25,12 @@ public class CityRepository extends Observable implements Container {
     public static CityRepository _instance = null;
 
     /**
-     * Used to make the repository a singleton.
-     * @return the same instance of city repo every time.
+     * Gets the common instance of <code>CityRepository</code>.
+     * <p>
+     * NOTE: When this function is first invoked, a new instance is created and the same is returned. In future
+     * invocations, the previously created instance is returned.
+     *
+     * @return instance of <code>CityRepository</code>
      */
     public static synchronized CityRepository getInstance() {
         if (_instance == null)
@@ -30,7 +39,9 @@ public class CityRepository extends Observable implements Container {
     }
 
     /**
-     * Add a new city and notify the observers.
+     * Adds a new city and notifies the observers.
+     *
+     * @param city new city instance
      */
     public void addNewCity(City city) {
         cityList.add(city);
@@ -39,7 +50,11 @@ public class CityRepository extends Observable implements Container {
     }
 
     /**
-     * Move an existing city to the new co-ordinates and notify the observers.
+     * Moves an existing city to the new co-ordinates and notifies the observers.
+     *
+     * @param city existing city instance
+     * @param x new x-coordinate of the city
+     * @param y new y-coordinate of the city
      */
     public void moveExistingCity(City city, int x, int y) {
         city.move(x, y);
@@ -48,7 +63,7 @@ public class CityRepository extends Observable implements Container {
     }
 
     /**
-     * Clear all the cities and notify the observers.
+     * Clears all the cities and notifies the observers.
      */
     public void clearAllCities() {
         cityList.clear();
@@ -57,10 +72,10 @@ public class CityRepository extends Observable implements Container {
     }
 
     /**
-     * Load a list of cities from a file and notify the observers.
+     * Loads a list of cities from a file and notifies the observers.
      *
-     * @param file handle to file containing data
-     * @throws IOException  if the file does not exist, is a directory rather than a regular file, or for some other
+     * @param file handle to the file containing data
+     * @throws IOException if the file does not exist, is a directory rather than a regular file, or for some other
      * reason cannot be opened for reading.
      */
     public void load(File file) throws IOException {
@@ -104,7 +119,7 @@ public class CityRepository extends Observable implements Container {
     }
 
     /**
-     * Save the list of cities to a file.
+     * Saves the list of cities to a file.
      *
      * @param file handle to the file where the data is to be saved
      * @throws IOException  if the named file exists but is a directory rather than a regular file, does not exist but
@@ -120,11 +135,21 @@ public class CityRepository extends Observable implements Container {
     }
 
     /**
-     * Get the list of cities.
+     * Gets the list of cities.
      * @return list of cities
      */
     public List<City> getCityList() {
         return cityList;
+    }
+
+    /**
+     * Gets an iterator for the list of cities contained in this repository.
+     *
+     * @return an iterator for the list of cities contained in this repository.
+     */
+    @Override
+    public Iterator getIterator() {
+        return new ObjectIterator<>(cityList);
     }
 
     private String readTextFile(File file) throws IOException {
@@ -135,14 +160,5 @@ public class CityRepository extends Observable implements Container {
             fileTextStringBuilder.append(lineText).append("\n");
         }
         return fileTextStringBuilder.toString();
-    }
-
-    /**
-     * Used to generate the iterator for the city repo.
-     * @return a new iterator.
-     */
-    @Override
-    public Iterator getIterator() {
-        return new ObjectIterator<>(cityList);
     }
 }

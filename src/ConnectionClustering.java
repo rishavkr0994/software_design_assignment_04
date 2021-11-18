@@ -2,11 +2,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is responsible for solving the the connection strategy using the clustering algorithm.
- * @author Aru Raghuwanshi
+ * This class is responsible for solving the connection strategy using the clustering algorithm.
  *
+ * @author Aru Raghuwanshi
+ * @version 1.0
+ * @since 2021-11-12
  */
 public class ConnectionClustering extends ConnectionStrategy {
+
+	/**
+	 *
+	 * @param cityList
+	 * @return
+	 */
 	public List<List<Route>> solve(List<City> cityList) {
 		int maxX = cityList.get(0).getX();
 		int maxY = cityList.get(0).getY();

@@ -2,9 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * This class handles the dialogue box that pops up when the user double clicks to edit a city.
- * It is mainly responsible for fetching the new shape, color and size for the decorations that
- * are to be applied to the base shape.
+ * This class handles the dialogue box that pops up when the user double clicks to edit a city. It is mainly responsible
+ * for fetching the new shape, color and size for the decorations that are to be applied to the base shape.
  *
  * @author
  * @version 1.0

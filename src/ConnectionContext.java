@@ -4,10 +4,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * This class is responsible of being an observer for Workspace, to get notified about every city addition.
- * This class also acts as an observable for WorkSpacePanel which basically draws everytime a city is updated.
- * @author Aru Raghuwanshi
+ * This class is responsible of being an observer for <code>CityRepository</code>, to get notified about every city
+ * addition / movement. It also implements the strategy pattern to select the algorithm for connecting the cities at
+ * runtime.
  *
+ * @author Aru Raghuwanshi
+ * @version 1.0
+ * @since 2021-11-12
  */
 public class ConnectionContext implements Observer {
 
@@ -18,6 +21,7 @@ public class ConnectionContext implements Observer {
 	
 	/**
 	 * This is responsible for initializing which strategy would be used.
+	 *
 	 * @param connectionStrategy
 	 */
 	public void setStrategy(ConnectionStrategy connectionStrategy) {
@@ -27,7 +31,7 @@ public class ConnectionContext implements Observer {
 	}
 	
 	/**
-	 * This is responsible to notify the observers and execute the selected strategy.
+	 * This is responsible to execute the selected strategy and update the connections in <code>RouteRepository</code>
 	 */
 	public void executeStrategy() {
 		if (connectionStrategy != null) {
