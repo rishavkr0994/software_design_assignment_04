@@ -3,38 +3,48 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- * This program implements a GUI to display the optimal travel route between a group of cities. The cities can be marked
- * on screen with a mouse click. Also, the marked cities can be moved to a new location by clicking and dragging it. The
- * program also supports additional functions to clear the screen and load/save the city data from/to a text file.
+ * This program implements a GUI to display cities and the connections between them using one of the algorithm options
+ * for the connections (TSP - Nearest Neighbor, TSP - Pro, Cluster, User Connect). It also provides options to create a
+ * city, move a city, and connect two cities manually through mouse movements. The program also supports additional
+ * functions to clear the screen and load / save the city data from / to a text file.
  *
- * @author Zhuoran Li, Rishav Kumar, Aru Raghuwanshi
+ * @author Aru Raghuwanshi, Krishna Sandeep Rupaakula, Rishav Kumar, Sasanka Gali
  * @version 1.0
- * @since 2021-10-02
+ * @since 2021-11-12
  */
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements ActionListener, ItemListener {
 
     private static final int DEFAULT_WINDOW_HEIGHT = 600;
     private static final int DEFAULT_WINDOW_WIDTH = 800;
 
     private final WorkSpacePanel drawArea;
+    private final ConnectionContext connectionContext;
+
+    private final JRadioButtonMenuItem mItemTSPNearestNeighbor;
+    private final JRadioButtonMenuItem mItemTSPPro;
+    private final JRadioButtonMenuItem mItemClusters;
+    private final JRadioButtonMenuItem mItemUserConnect;
+
+    private final JRadioButtonMenuItem mItemCreate;
+    private final JRadioButtonMenuItem mItemMove;
+    private final JRadioButtonMenuItem mItemConnect;
+
 
     /**
-     * Default constructor. Initializes the GUI components and their defines their responses to user actions. It sets
-     * the TSP class as an <tt>Observer</tt> of the WorkSpace class (the <tt>Observable</tt>), so that it can respond to
-     * addition/movement of a city by re-evaluating the optimal route. Also, the WorkSpace class is set as an
-     * <tt>Observer</tt> of the TSP class (the <tt>Observable</tt>) so that it can respond to the generation of a new
-     * route by re-drawing the new route on the panel.
+     * Default constructor. Initializes the GUI components and their defines their responses to user actions. It also
+     * establishes the connections for the Observer pattern.
      */
     public MainFrame() {
         super("Travelling Salesman Path Plotting Tool");
         setLayout(new BorderLayout());
 
-        ConnectionContext connectionContext = new ConnectionContext();
+        connectionContext = new ConnectionContext();
         CityRepository.getInstance().addObserver(connectionContext);
 
         drawArea = new WorkSpacePanel();
@@ -79,44 +89,24 @@ public class MainFrame extends JFrame implements ActionListener {
         JMenu connectionsMenu = new JMenu("Connections");
         ButtonGroup connectionsButtonGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem mItemTSPNearestNeighbor = new JRadioButtonMenuItem("TSP - Nearest Neighbor");
-        mItemTSPNearestNeighbor.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Nearest Neighbor");
-                connectionContext.setStrategy(new ConnectionTSPNearestNeighbour());
-            }
-        });
+        mItemTSPNearestNeighbor = new JRadioButtonMenuItem("TSP - Nearest Neighbor");
+        mItemTSPNearestNeighbor.addItemListener(this);
         mItemTSPNearestNeighbor.setSelected(true);
         connectionsButtonGroup.add(mItemTSPNearestNeighbor);
         connectionsMenu.add(mItemTSPNearestNeighbor);
 
-        JRadioButtonMenuItem mItemTSPPro = new JRadioButtonMenuItem("TSP - Pro");
-        mItemTSPPro.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Pro");
-                connectionContext.setStrategy(new ConnectionTSPPro());
-            }
-        });
+        mItemTSPPro = new JRadioButtonMenuItem("TSP - Pro");
+        mItemTSPPro.addItemListener(this);
         connectionsButtonGroup.add(mItemTSPPro);
         connectionsMenu.add(mItemTSPPro);
 
-        JRadioButtonMenuItem mItemClusters = new JRadioButtonMenuItem("Clusters");
-        mItemClusters.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to Clusters");
-                connectionContext.setStrategy(new ConnectionClustering());
-            }
-        });
+        mItemClusters = new JRadioButtonMenuItem("Clusters");
+        mItemClusters.addItemListener(this);
         connectionsButtonGroup.add(mItemClusters);
         connectionsMenu.add(mItemClusters);
 
-        JRadioButtonMenuItem mItemUserConnect = new JRadioButtonMenuItem("User Connect");
-        mItemUserConnect.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to User Connect");
-                connectionContext.setStrategy(null);
-            }
-        });
+        mItemUserConnect = new JRadioButtonMenuItem("User Connect");
+        mItemUserConnect.addItemListener(this);
         connectionsButtonGroup.add(mItemUserConnect);
         connectionsMenu.add(mItemUserConnect);
 
@@ -125,34 +115,19 @@ public class MainFrame extends JFrame implements ActionListener {
         JMenu actionsMenu = new JMenu("Action");
         ButtonGroup actionsButtonGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem mItemCreate = new JRadioButtonMenuItem("Create");
-        mItemCreate.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to create city");
-                drawArea.setMouseActionStrategy(new ActionCreateOperation(this));
-            }
-        });
+        mItemCreate = new JRadioButtonMenuItem("Create");
+        mItemCreate.addItemListener(this);
         mItemCreate.setSelected(true);
         actionsButtonGroup.add(mItemCreate);
         actionsMenu.add(mItemCreate);
 
-        JRadioButtonMenuItem mItemMove = new JRadioButtonMenuItem("Move");
-        mItemMove.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to move city");
-                drawArea.setMouseActionStrategy(new ActionMoveOperation());
-            }
-        });
+        mItemMove = new JRadioButtonMenuItem("Move");
+        mItemMove.addItemListener(this);
         actionsButtonGroup.add(mItemMove);
         actionsMenu.add(mItemMove);
 
-        JRadioButtonMenuItem mItemConnect = new JRadioButtonMenuItem("Connect");
-        mItemConnect.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to connect city");
-                drawArea.setMouseActionStrategy(new ActionConnectOperation());
-            }
-        });
+        mItemConnect = new JRadioButtonMenuItem("Connect");
+        mItemConnect.addItemListener(this);
         actionsButtonGroup.add(mItemConnect);
         actionsMenu.add(mItemConnect);
 
@@ -175,6 +150,13 @@ public class MainFrame extends JFrame implements ActionListener {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Invoked when an action occurs.
+     * <p>
+     * It defines the action for the File menu items.
+     *
+     * @param ev action event
+     */
     @Override
     public void actionPerformed(ActionEvent ev) {
         switch (ev.getActionCommand()) {
@@ -187,6 +169,42 @@ public class MainFrame extends JFrame implements ActionListener {
             case "File_Save":
                 onClickFileSave();
                 break;
+        }
+    }
+
+    /**
+     * Invoked when an item has been selected or deselected by the user. The code written for this method performs the
+     * operations that need to occur when an item is selected (or deselected).
+     * <p>
+     *  It defines the actions on item state change event for the Connections and Action menu items
+     *
+     * @param ev item event
+     */
+    @Override
+    public void itemStateChanged(ItemEvent ev) {
+        if (ev.getStateChange() == ItemEvent.SELECTED) {
+            if (ev.getSource() == mItemTSPNearestNeighbor) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Nearest Neighbor");
+                connectionContext.setStrategy(new ConnectionTSPNearestNeighbour());
+            } else if (ev.getSource() == mItemTSPPro) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to TSP - Pro");
+                connectionContext.setStrategy(new ConnectionTSPPro());
+            } else if (ev.getSource() == mItemClusters) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to Clusters");
+                connectionContext.setStrategy(new ConnectionClustering());
+            } else if (ev.getSource() == mItemUserConnect) {
+                Logger.getInstance().info("[Strategy Pattern] Setting connections strategy to User Connect");
+                connectionContext.setStrategy(null);
+            } else if (ev.getSource() == mItemCreate) {
+                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to create city");
+                drawArea.setMouseActionStrategy(new ActionCreateOperation(this));
+            } else if (ev.getSource() == mItemMove) {
+                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to move city");
+                drawArea.setMouseActionStrategy(new ActionMoveOperation());
+            } else if (ev.getSource() == mItemConnect) {
+                Logger.getInstance().info("[Strategy Pattern] Setting mouse action strategy to connect city");
+                drawArea.setMouseActionStrategy(new ActionConnectOperation());
+            }
         }
     }
 
