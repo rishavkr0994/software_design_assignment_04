@@ -5,7 +5,7 @@ public class CitySquareDecorationHandler extends CityDecorationHandler {
         for (int i = 1; i < 5; i++) {
             if (options[i]) {
                 Logger.getInstance().info("[Decorator] Decorating city with square " + i);
-                decoratedShape = new Square(decoratedShape, i);
+                decoratedShape = new SquareDecorator(decoratedShape, i);
             }
         }
 

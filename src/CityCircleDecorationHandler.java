@@ -4,7 +4,7 @@ public class CityCircleDecorationHandler extends CityDecorationHandler {
         ShapeInterface decoratedShape = shape;
         if (options[0]) {
             Logger.getInstance().info("[Decorator] Decorating city with circle");
-            decoratedShape = new Circle(decoratedShape);
+            decoratedShape = new CircleDecorator(decoratedShape);
         }
 
         if (successor != null)

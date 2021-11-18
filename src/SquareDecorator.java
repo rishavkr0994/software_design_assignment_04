@@ -1,17 +1,22 @@
 import java.awt.*;
 
-/** Some Text Here
+/** This class creates the square decorators and positions them according to the user's choice.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0
  * @since 2021-11-12
  */
-public class Square extends ShapeDecorator {
+public class SquareDecorator extends ShapeDecorator {
     
     private Rectangle rect;
     private final int type;
 
-    public Square(ShapeInterface shape, int type) {
+    /**
+     * Constructor for square decorator. Different type based on selection.
+     * @param shape base implementation to decorate.
+     * @param type which side should the square be on.
+     */
+    public SquareDecorator(ShapeInterface shape, int type) {
         super(shape);
         this.type = type;
         if (type == 1) {
@@ -29,6 +34,11 @@ public class Square extends ShapeDecorator {
         }
     }
 
+    /**
+     * Moves the decoration.
+     * @param x x coordinate.
+     * @param y y coordinate.
+     */
     @Override
     public void move(int x, int y) {
         super.move(x, y);
@@ -47,6 +57,11 @@ public class Square extends ShapeDecorator {
         }
     }
 
+    /**
+     * Change the decoration's size.
+     * @param width new width.
+     * @param height new height.
+     */
     @Override
     public void setDimension(int width, int height) {
         super.setDimension(width, height);
@@ -54,11 +69,23 @@ public class Square extends ShapeDecorator {
         this.rect.height = height;
     }
 
+    /**
+     * Used to check if mouse click lands in decoration.
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @return if mouse has clicked in shape or not.
+     */
     @Override
     public boolean contains(int x, int y) {
         return super.contains(x, y) || this.rect.contains(x, y);
     }
 
+    /**
+     * Plots the shape on the GUI.
+     * @param g the graphics panel.
+     * @param color color of the shape.
+     * @param label name of the city.
+     */
     @Override
     public void draw(Graphics2D g, Color color, String label) {
         super.draw(g, color, label);

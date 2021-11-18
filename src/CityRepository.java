@@ -5,12 +5,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
+/** Responsible for managing the city database. Also implements the iterator.
+ *
+ * @author
+ * @version 1.0
+ * @since 2021-11-12
+ */
+
 public class CityRepository extends Observable implements Container {
     private final List<City> cityList = new ArrayList<>();
 
     private CityRepository() { }
 
     public static CityRepository _instance = null;
+
+    /**
+     * Used to make the repository a singleton.
+     * @return the same instance of city repo every time.
+     */
     public static synchronized CityRepository getInstance() {
         if (_instance == null)
             _instance = new CityRepository();
@@ -125,16 +137,17 @@ public class CityRepository extends Observable implements Container {
         return fileTextStringBuilder.toString();
     }
 
+    /**
+     * Used to generate the iterator for the city repo.
+     * @return a new iterator.
+     */
     @Override
     public Iterator getIterator() {
         return new Iterator() {
             int index;
             @Override
             public boolean hasNext() {
-                if(index < cityList.size()){
-                    return true;
-                }
-                return false;
+                return index < cityList.size();
             }
 
             @Override

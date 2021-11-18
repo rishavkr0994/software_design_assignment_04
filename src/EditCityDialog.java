@@ -1,16 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class handles the dialogue box that pops up when the user double clicks to edit a city.
+ * It is mainly responsible for fetching the new shape, color and size for the decorations that
+ * are to be applied to the base shape.
+ *
+ * @author
+ * @version 1.0
+ * @since 2021-11-12
+ */
 public class EditCityDialog extends JDialog {
     private static final int MIN_CITY_SIZE = 10;
     private static final int MAX_CITY_SIZE = 50;
-
-    private boolean isUpdated = false;
-
     private final JTextField labelTextField;
     private final JTextField sizeTextField;
     private final JColorChooser colorChooser;
+    private boolean isUpdated = false;
 
+    /**
+     * Method responsible for the dialogue box and fetching the new parameters.
+     * @param parent points to the JFrame object.
+     * @param city the city which needs to be edited.
+     */
     public EditCityDialog(JFrame parent, City city) {
         super(parent, "Edit City Properties", true);
         setSize(550, 550);
@@ -79,7 +91,7 @@ public class EditCityDialog extends JDialog {
                 city.setColor(colorChooser.getColor());
 
                 boolean[] options = new boolean[5];
-                for(int i = 0; i < shapeDecorationCheckBoxList.length; i++)
+                for (int i = 0; i < shapeDecorationCheckBoxList.length; i++)
                     options[i] = shapeDecorationCheckBoxList[i].isSelected();
                 city.setOptions(options);
 
@@ -98,10 +110,18 @@ public class EditCityDialog extends JDialog {
         add(cancelButton, constraints);
     }
 
+    /**
+     * Used to check if the new parameters have been applied.
+     * @return true or false.
+     */
     public boolean getUpdated() {
         return isUpdated;
     }
 
+    /**
+     * Used to check if user has entered valid data into the dialogue box.
+     * @return true or false.
+     */
     private boolean validateInput() {
         if (labelTextField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Label cannot be empty", "Invalid Input", JOptionPane.ERROR_MESSAGE);
