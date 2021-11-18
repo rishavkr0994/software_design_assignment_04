@@ -8,13 +8,13 @@ import java.util.Observer;
 import java.util.List;
 
 /**
- * A panel to display the cities and the route between them. It allows marking of a new city with a mouse click and also
- * allows to move an existing city to a new location by clicking the city and dragging it to a new location.
+ * A panel to display the cities and the route between them. It supports creation of new cities, movement and connection
+ * of existing cities based on the mouse action strategy
  * <p>
- * It implements the <tt>Observer</tt> interface so that it can observe an <tt><Observable</tt> (in our case, it is the
- * TSP class) and redraw the panel.
+ * It implements the <code>Observer</code> interface so that it can observe <code>CityRepository</code> and
+ * <code>RouteRepository</code> and redraw the panel when a change is notified.
  *
- * @author Zhuoran Li, Rishav Kumar, Aru Raghwanshi
+ * @author Aru Raghwanshi, Rishav Kumar, Krishna Sandeep Rupaakula
  * @version 1.0
  * @since 2021-10-02
  */
@@ -30,6 +30,10 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
         addMouseListener(this);
     }
 
+    /**
+     * Sets the mouse action strategy
+     * @param mouseActionStrategy mouse action strategy
+     */
     public void setMouseActionStrategy(ActionStrategy mouseActionStrategy) {
         this.mouseActionStrategy = mouseActionStrategy;
     }
@@ -44,10 +48,10 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        for (Iterator routeIter = RouteRepository.getInstance().getIterator(); routeIter.hasNext();){
-            List<Route> routeList = (List<Route>) routeIter.next();
-            if(routeList != null && routeList.size() >  0){
-                for(Route route : routeList)
+        for (Iterator routeIterator = RouteRepository.getInstance().getIterator(); routeIterator.hasNext();) {
+            List<Route> routeList = (List<Route>) routeIterator.next();
+            if (routeList != null && routeList.size() >  0){
+                for (Route route : routeList)
                     route.getSrc().drawConnect(route.getDest(), g2);
             }
         }
@@ -56,16 +60,13 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
         if (danglingRoute != null)
             danglingRoute.getSrc().drawConnect(danglingRoute.getDest(), g2);
 
-        for(Iterator iter = CityRepository.getInstance().getIterator(); iter.hasNext();)
-            ((City) iter.next()).draw(g2);
+        for (Iterator cityIterator = CityRepository.getInstance().getIterator(); cityIterator.hasNext();)
+            ((City) cityIterator.next()).draw(g2);
     }
 
     /**
      * This method is called whenever the observed object is changed. An application calls an <tt>Observable</tt>
      * object's <code>notifyObservers</code> method to have all the object's observers notified of the change.
-     * <p>
-     * This function gets the route information from an <tt>Observable</tt> and call the <code>repaint</code> function
-     * to re-draw the panel.
      *
      * @param o   the observable object.
      * @param arg an argument passed to the <code>notifyObservers</code>
@@ -77,6 +78,9 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
 
     /**
      * Invoked when the mouse button has been clicked (pressed and released) on a component.
+     *  <p>
+     *  When the user double-clicks an existing city, a dialog to edit the city properties is displayed. If there were
+     *  changes made to the city properties, the changes are applied by calling the <code>repaint()</code> function.
      *
      * @param e the event to be processed
      */
@@ -100,8 +104,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     /**
      * Invoked when a mouse button has been pressed on a component.
      * <p>
-     * A new city is marked when the user clicks on an empty space, else if the user clicks on a city, the city movement
-     * operation is initiated.
+     * Invokes the <code>mousePressed</code> function of the mouse action strategy.
      *
      * @param e the event to be processed
      */
@@ -118,8 +121,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
      * Due to platform-dependent Drag&amp;Drop implementations,{@code MOUSE_DRAGGED} events may not be delivered during
      * a native Drag&amp;Drop operation.
      * <p>
-     * If a city movement is in progress, it updates the co-ordinates of the moving city based on the current cursor
-     * location on screen.
+     * Invokes the <code>mouseDragged</code> function of the mouse action strategy.
      *
      * @param e the event to be processed
      */
@@ -139,7 +141,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     /**
      * Invoked when a mouse button has been released on a component.
      * <p>
-     * Commits the city movement operation and updates the city co-ordinates to the current cursor location on screen.
+     * Invokes the <code>mouseReleased</code> function of the mouse action strategy.
      *
      * @param e the event to be processed
      */

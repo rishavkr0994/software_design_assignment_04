@@ -8,7 +8,7 @@ import java.util.Observable;
  * It extends <code>Observable</code> and notifies its observers whenever there is a change in the repository data. It
  * also provides an iterator for the list of route contained within it.
  *
- * @author
+ * @author Krishna Sandeep Rupaakula, Sasanka Gali
  * @version 1.0
  * @since 2021-11-12
  */
