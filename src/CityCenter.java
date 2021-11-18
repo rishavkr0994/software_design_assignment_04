@@ -1,11 +1,17 @@
 import java.awt.*;
 
+/** Some Text Here
+ *
+ * @author Krishna Sandeep Rupaakula
+ * @version 1.0
+ * @since 2021-11-12
+ */
 public class CityCenter implements ShapeInterface {
 
-    private Rectangle rect;
+    private final Rectangle rect;
 
-    public CityCenter(int x, int y, int height, int width) {
-        this.rect = new Rectangle(x, y, height, width);
+    public CityCenter(int x, int y, int width, int height) {
+        this.rect = new Rectangle(x, y, width, height);
     }
 
     public int getX() {
@@ -25,7 +31,7 @@ public class CityCenter implements ShapeInterface {
         this.rect.y = y;
     }
 
-    public void setDimension(int height, int width) {
+    public void setDimension(int width, int height) {
         this.rect.width = width;
         this.rect.height = height;
     }
@@ -36,7 +42,7 @@ public class CityCenter implements ShapeInterface {
 
     public void draw(Graphics2D g, Color color, String label) {
         g.setColor(color);
-        g.drawRect(rect.x, rect.y, rect.height, rect.width);
+        g.drawRect(rect.x, rect.y, rect.width, rect.height);
         g.fill(rect);
         g.setColor(Color.black);
         g.drawString(label, rect.x + rect.width + 5, rect.y - 5);

@@ -1,8 +1,14 @@
 import java.awt.*;
 
+/** Some Text Here
+ *
+ * @author Krishna Sandeep Rupaakula
+ * @version 1.0
+ * @since 2021-11-12
+ */
 public abstract class ShapeDecorator implements ShapeInterface {
 
-    public ShapeInterface shape;
+    private final ShapeInterface shape;
 
     public ShapeDecorator(ShapeInterface shape) {
         this.shape = shape;
@@ -24,8 +30,8 @@ public abstract class ShapeDecorator implements ShapeInterface {
         this.shape.move(x, y);
     }
 
-    public void setDimension(int height, int width) {
-        this.shape.setDimension(height, width);
+    public void setDimension(int width, int height) {
+        this.shape.setDimension(width, height);
     }
 
     public boolean contains(int x, int y) {
