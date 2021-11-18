@@ -17,6 +17,7 @@ import java.io.PrintStream;
  * @since 2021-10-02
  */
 public class MainFrame extends JFrame implements ActionListener {
+
     private static final int DEFAULT_WINDOW_HEIGHT = 600;
     private static final int DEFAULT_WINDOW_WIDTH = 800;
 
@@ -217,18 +218,6 @@ public class MainFrame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, msg);
             }
         }
-    }
-
-    private void onClickConnectionsTSPNearestNNeighbor() {
-    }
-
-    private void onClickConnectionsTSPPro() {
-    }
-
-    private void onClickConnectionsClusters() {
-    }
-
-    private void onClickConnectionsUserConnect() {
     }
 
     private File displayFileSelectionDialog() {

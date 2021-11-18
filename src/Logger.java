@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
  * @since 2021-11-12
  */
 public class Logger {
+
     private static final String LOG_FORMAT = "%-10s%-7s%s\n";
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss");
 

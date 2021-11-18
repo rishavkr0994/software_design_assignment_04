@@ -12,7 +12,8 @@ import java.util.Observable;
  * @version 1.0
  * @since 2021-11-12
  */
-public class RouteRepository extends Observable implements Container{
+public class RouteRepository extends Observable implements Container {
+
     private List<List<Route>> routeList = new ArrayList<>();
     private Route danglingRoute = null;
 

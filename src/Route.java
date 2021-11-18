@@ -6,6 +6,7 @@
  * @since 2021-10-02
  */
 public class Route {
+
     private City src;
     private City dest;
 

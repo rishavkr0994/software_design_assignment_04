@@ -9,6 +9,7 @@ import java.io.OutputStream;
  * @since 2021-11-12
  */
 public class TextAreaOutputStream extends OutputStream {
+
     private final JTextArea textArea;
 
     /**

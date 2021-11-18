@@ -22,7 +22,7 @@ public class CityRepository extends Observable implements Container {
 
     private CityRepository() { }
 
-    public static CityRepository _instance = null;
+    private static CityRepository _instance = null;
 
     /**
      * Gets the common instance of <code>CityRepository</code>.

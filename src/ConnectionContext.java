@@ -33,7 +33,7 @@ public class ConnectionContext implements Observer {
 	/**
 	 * This is responsible to execute the selected strategy and update the connections in <code>RouteRepository</code>
 	 */
-	public void executeStrategy() {
+	private void executeStrategy() {
 		if (connectionStrategy != null) {
 			List<City> cityList = CityRepository.getInstance().getCityList();
 			List<List<Route>> routeList = cityList.size() > 0 ? connectionStrategy.solve(cityList) : new ArrayList<>();
