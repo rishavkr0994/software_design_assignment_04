@@ -14,7 +14,7 @@ import java.util.List;
  * It implements the <code>Observer</code> interface so that it can observe <code>CityRepository</code> and
  * <code>RouteRepository</code> and redraw the panel when a change is notified.
  *
- * @author Aru Raghwanshi, Rishav Kumar, Krishna Sandeep Rupaakula
+ * @author Aru Raghwanshi, Krishna Sandeep Rupaakula, Rishav Kumar, Sasanka Gali
  * @version 1.0
  * @since 2021-10-02
  */

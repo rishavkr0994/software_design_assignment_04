@@ -1,7 +1,10 @@
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-/** This class creates the circle decorator.
+/**
+ * A concrete decorator class in the Decorator pattern, which is used to create concrete decorators. It is used to
+ * implement the Decorator pattern for the city shape. This class decorates the city shape with a circle inside the
+ * central rectangle.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0

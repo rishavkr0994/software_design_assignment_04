@@ -1,6 +1,8 @@
 import java.awt.*;
 
-/** This is the abstract class which is used to create the decorators.
+/**
+ * The abstract decorator class in the Decorator pattern, which is used to create concrete decorators. It is used to
+ * implement the Decorator pattern for the city shape.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0

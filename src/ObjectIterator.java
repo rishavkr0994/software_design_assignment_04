@@ -4,7 +4,7 @@ import java.util.List;
  * A generic iterator for a list of objects. It implements the Iterator interface
  * @param <T>
  *
- * @author Krishna Sandeep Rupaakula, Rishav Kumar
+ * @author Krishna Sandeep Rupaakula, Sasanka Gali
  * @version 1.0
  * @since 2021-10-02
  */

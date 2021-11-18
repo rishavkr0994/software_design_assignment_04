@@ -1,6 +1,8 @@
 import java.awt.*;
 
-/** Some Text Here
+/**
+ * The concrete component in the Decorator pattern. It is used to implement the base shape for the city, to which the
+ * decorations can be applied.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0

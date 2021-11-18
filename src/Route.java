@@ -1,7 +1,7 @@
 /**
  * This class is the data structure for storing information about a route i.e. source and destination city.
  *
- * @author Zhuoran Li, Rishav Kumar
+ * @author Rishav Kumar
  * @version 1.0
  * @since 2021-10-02
  */

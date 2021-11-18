@@ -5,7 +5,7 @@ import java.awt.*;
  * This class handles the dialogue box that pops up when the user double clicks to edit a city. It is mainly responsible
  * for fetching the new shape, color and size for the decorations that are to be applied to the base shape.
  *
- * @author
+ * @author Rishav Kumar
  * @version 1.0
  * @since 2021-11-12
  */

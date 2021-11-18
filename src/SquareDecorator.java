@@ -1,6 +1,9 @@
 import java.awt.*;
 
-/** This class creates the square decorators and positions them according to the user's choice.
+/**
+ * A concrete decorator class in the Decorator pattern, which is used to create concrete decorators. It is used to
+ * implement the Decorator pattern for the city shape. This class decorates the city shape with a square around the
+ * central rectangle positioned according to the user's choice.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0

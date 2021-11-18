@@ -4,7 +4,7 @@ import java.io.OutputStream;
 /**
  * This class defines an output stream for writing out data to a JTextArea
  *
- * @author Rishav Kumar
+ * @author Sasanka Gali
  * @version 1.0
  * @since 2021-11-12
  */

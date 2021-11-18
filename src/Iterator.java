@@ -1,4 +1,5 @@
-/** An interface for the iterator.
+/**
+ * An interface for the iterator.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0

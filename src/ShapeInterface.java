@@ -1,6 +1,7 @@
 import java.awt.*;
 
-/** Some Text Here
+/**
+ * The component interface in the Decorator pattern. It is used to implement the Decorator pattern for the city shape.
  *
  * @author Krishna Sandeep Rupaakula
  * @version 1.0
