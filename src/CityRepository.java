@@ -67,6 +67,7 @@ public class CityRepository extends Observable implements Container {
      */
     public void clearAllCities() {
         cityList.clear();
+        RouteRepository.getInstance().getRouteList().clear();
         setChanged();
         notifyObservers();
     }
