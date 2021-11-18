@@ -9,7 +9,8 @@ import java.util.Observer;
  * @author Aru Raghuwanshi
  *
  */
-public class ConnectionContext extends Observable implements Observer {
+public class ConnectionContext implements Observer {
+
 	private ConnectionStrategy connectionStrategy;
 
 	public ConnectionContext() {
@@ -20,7 +21,7 @@ public class ConnectionContext extends Observable implements Observer {
 	 * @param connectionStrategy
 	 */
 	public void setStrategy(ConnectionStrategy connectionStrategy) {
-		WorkSpace.getInstance().getRouteList().clear();
+		RouteRepository.getInstance().getRouteList().clear();
 		this.connectionStrategy = connectionStrategy;
 		executeStrategy();
 	}
@@ -30,12 +31,10 @@ public class ConnectionContext extends Observable implements Observer {
 	 */
 	public void executeStrategy() {
 		if (connectionStrategy != null) {
-			List<City> cityList = WorkSpace.getInstance().getCityList();
+			List<City> cityList = CityRepository.getInstance().getCityList();
 			List<List<Route>> routeList = cityList.size() > 0 ? connectionStrategy.solve(cityList) : new ArrayList<>();
-			WorkSpace.getInstance().setRouteList(routeList);
+			RouteRepository.getInstance().setRouteList(routeList);
 		}
-		setChanged();
-		notifyObservers();
 	}
 
 	@Override

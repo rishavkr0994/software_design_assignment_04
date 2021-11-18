@@ -43,7 +43,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        List<List<Route>> routeList2 = WorkSpace.getInstance().getRouteList();
+        List<List<Route>> routeList2 = RouteRepository.getInstance().getRouteList();
 
         for(List<Route> routeList : routeList2) {
         	if (routeList != null && routeList.size() > 0) {
@@ -52,9 +52,12 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
         	}
         }
 
-        for (City city : WorkSpace.getInstance().getCityList())
-            city.draw(g2);
+        Route danglingRoute = RouteRepository.getInstance().getDanglingRoute();
+        if (danglingRoute != null)
+            danglingRoute.getSrc().drawConnect(danglingRoute.getDest(), g2);
 
+        for (City city : CityRepository.getInstance().getCityList())
+            city.draw(g2);
     }
 
     /**
@@ -80,7 +83,7 @@ public class WorkSpacePanel extends JPanel implements MouseListener, MouseMotion
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-            City clickedCity = WorkSpace.getInstance().getCityList().stream()
+            City clickedCity = CityRepository.getInstance().getCityList().stream()
                     .filter(x -> x.contains(e.getX(), e.getY()))
                     .findFirst().orElse(null);
 

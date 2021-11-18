@@ -15,7 +15,7 @@ public class ActionCreateOperation extends ActionStrategy {
             String cityName = JOptionPane.showInputDialog(parentFrame, "Enter City Name");
             if (cityName != null && !cityName.isEmpty()) {
                 City city = CityFactory.getInstance().getCity(cityName, e.getX(), e.getY());
-                WorkSpace.getInstance().addNewCity(city);
+                CityRepository.getInstance().addNewCity(city);
             }
         }
     }
