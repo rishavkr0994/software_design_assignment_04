@@ -25,11 +25,14 @@ public class ConnectionClustering extends ConnectionStrategy {
 			maxX = Math.max(maxX, cityList.get(i).getX());
 			maxY = Math.max(maxY, cityList.get(i).getY());
 			minX = Math.min(minX, cityList.get(i).getX());
-			minX = Math.min(minY, cityList.get(i).getY());
+			minY = Math.min(minY, cityList.get(i).getY());
 		}
 		
 		List<List<Route>> routeList2 = new ArrayList<>();
 		ConnectionTSPNearestNeighbour tspNN = new ConnectionTSPNearestNeighbour();
+//		List<City> leftTopCluster = getCluster(cityList, minX, (maxY+minY)/2, (maxX+minX)/2, maxY);
+//		List<City> rightTopCluster = getCluster(cityList, (maxX+minX)/2, (maxY+minY)/2, maxX, maxY)
+//		List<City> 
 		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, minX, (maxY+minY)/2, (maxX+minX)/2, maxY)));
 		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, (maxX+minX)/2, (maxY+minY)/2, maxX, maxY)));
 		routeList2.add(tspNN.solveTSPNN(getCluster(cityList, minX, minY, (maxX+minX)/2, (maxY+minY)/2)));
